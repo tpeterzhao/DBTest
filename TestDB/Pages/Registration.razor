@@ -1,0 +1,148 @@
+﻿@page "/Register"
+@using Microsoft.Extensions.Configuration
+@using System.Configuration
+@using DataAccess
+@using System.Data.SqlClient
+@using DataAccess.Model
+@inject ISqlAccess _data
+@inject IConfiguration _config
+
+<div class="content">
+    <h1>Registration</h1>
+    <br><label>Contact Information</label>
+    <div>
+        <input type="text" name="firstname" id="firstname" placeholder="First Name" @bind="firstName">
+        <input type="text" name="middlename" id="middleInitial" placeholder="Middle Initial" @bind="middleInitial">
+        <input type="text" name="lastname" id="lastname" placeholder="Last Name" @bind="lastName">
+        <input type="text" id="phonenumber" placeholder="Phone Number" @bind="phoneNumber">
+        <input type="text" id="email" placeholder="Email" @bind="emailAddress">
+    </div>
+    <br><label for="address">Address</label>
+    <div>
+        <input type="text" id="streetaddress" placeholder="Street Address" style="width:500px;" @bind="address">
+        <input type="text" id="city" placeholder="City" @bind="city">
+        <input type="text" id="state" placeholder="State" @bind="state">
+        <input type="text" id="zipcode" placeholder="ZipCode" @bind="zipCode">
+    </div>
+
+    <br>
+    <label>Academics</label>
+    <div>
+        <input type="text" id="affiliation" placeholder="Affiliation" @bind="affiliation">
+        <input type="text" id="department" placeholder="Department" @bind="department">
+    </div>
+    <div>
+        <input type="checkbox" name="" value="Reviewer">
+        <label>Are you a reviewer?</label>
+    </div>
+    <br>
+    <label>Interested Topics:</label>
+    <div>
+        <input type="checkbox" name="AoA">
+        <label for="AoA">Analysis of Algorithms</label>
+        <input type="checkbox">
+        <label>Distributed Systems</label>
+        <input type="checkbox">
+        <label>Mathematics in Computing</label>
+        <input type="checkbox">
+        <label>Research</label>
+    </div>
+    <div>
+        <input type="checkbox">
+        <label>Applications</label>
+        <input type="checkbox" name="E/S">
+        <label for="E/S">Ethical/Social Issues</label>
+        <input type="checkbox">
+        <label>Multimedia</label>
+        <input type="checkbox">
+        <label>Security</label>
+    </div>
+    <div>
+        <input type="checkbox">
+        <label>Architecture</label>
+        <input type="checkbox">
+        <label>First Year Computing</label>
+        <input type="checkbox">
+        <label>Networking/Data Communications</label>
+        <input type="checkbox">
+        <label>Software Engineering</label>
+    </div>
+    <div>
+        <input type="checkbox">
+        <label>Artificial Intelligence</label>
+        <input type="checkbox">
+        <label>Gender Issues</label>
+        <input type="checkbox">
+        <label>Non-Major Courses</label>
+        <input type="checkbox">
+        <label>Systems Analysis and Design</label>
+    </div>
+    <div>
+        <input type="checkbox">
+        <label>Computer Engineering</label>
+        <input type="checkbox">
+        <label>Grant Writing</label>
+        <input type="checkbox">
+        <label>Object Oriented Issues</label>
+        <input type="checkbox">
+        <label>Using Technology in the Classroom</label>
+    </div>
+    <div>
+        <input type="checkbox">
+        <label>Curriculum</label>
+        <input type="checkbox">
+        <label>Graphics Image Processing</label>
+        <input type="checkbox">
+        <label>Operating Systems</label>
+        <input type="checkbox">
+        <label>Web and Internet Programming</label>
+    </div>
+    <div>
+        <input type="checkbox">
+        <label>Data Structures</label>
+        <input type="checkbox">
+        <label>Human Computer Interaction</label>
+        <input type="checkbox">
+        <label>Parallel Processing</label>
+        <input type="checkbox">
+        <label>Database</label>
+    </div>
+    <div>
+        <input type="checkbox">
+        <label>Laboratory Environments</label>
+        <input type="checkbox">
+        <label>Pedagogy</label>
+        <input type="checkbox">
+        <label>Distance Learning</label>
+        <input type="checkbox">
+        <label>Literacy</label>
+    </div>
+    <div>
+        <input type="checkbox">
+        <label>Programming Languages</label>
+        <input type="checkbox">
+        <label>Other(Describe)</label>
+        <input type="text" name="" value="">
+    </div>
+    <br>
+    <div style="display:grid; justify-content: center;">
+        <label>Sign up</label>
+        <input type="password" name="password" id="password" placeholder="Password" style="width: 300px;" @bind="password">
+        <input type="password" name="reenter" placeholder="Confirm Password" style="width: 300px;">
+        <div style="display: flex; flex-direction: row;">
+            <form action="/Confirmation">
+                <button type="submit" name="button" @onclick="() => addUser()">Submit</button>
+            </form>
+            <button type="button" name="button" onclick="javascript: history.back()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    string firstName, middleInitial, lastName, affiliation, department, address, city, zipCode, state, emailAddress, phoneNumber, password;
+    private Task addUser()
+    {
+        string sql = "INSERT INTO Author (FirstName, MiddleInitial, LastName, Affiliation, Department, Address, City, State, ZipCode, PhoneNumber, EmailAddress, Password) VALUES (" + "'" + firstName + "', '" + middleInitial + "', '" + lastName + "', '" + affiliation + "', '" + department + "', '" + address + "', '" + city + "', '" + state + "', '" + zipCode + "', '" + phoneNumber + "', '" + emailAddress + "', '" + password + "')";
+        return _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+    }
+}
