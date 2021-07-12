@@ -7,6 +7,9 @@
         <input type="password" class="content-item" placeholder="Password" @bind="password">
         <label for="role">Log in as: </label>
         <select name="role" id="role" class="content-item" @bind="userRole">
+            <option value="none" selected disabled hidden>
+                Select your role
+            </option>
             <option value="admin">Admin</option>
             <option value="author">Author</option>
             <option value="reviewer">Reviewer</option>
@@ -23,7 +26,6 @@
     {
         if (userRole == "admin")
         {
-
             if (username == "admin" && password == "admin")
             {
                 NavigationManager.NavigateTo("Admin");
