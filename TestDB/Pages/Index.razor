@@ -5,6 +5,12 @@
         <h2>Log in</h2>
         <input type="text" class="content-item" placeholder="Username" @bind="username">
         <input type="password" class="content-item" placeholder="Password" @bind="password">
+        <label for="role">Log in as: </label>
+        <select name="role" id="role" class="content-item" @bind="userRole">
+            <option value="admin">Admin</option>
+            <option value="author">Author</option>
+            <option value="reviewer">Reviewer</option>
+        </select>
         <button type="button" class="content-item" name="button" onclick="location.href = '/Register'">Create new account</button>
         <button type="button" class="content-item" name="button" @onclick="() => login()">Login</button>
         <a href="/RetrievePassword" class="content-item">Forgot your password?</a>
@@ -12,12 +18,32 @@
 </div>
 
 @code{
-    string username, password;
+    string username, password, userRole;
     private void login()
     {
-        if (username == "admin" && password == "admin")
+        if (userRole == "admin")
         {
-            NavigationManager.NavigateTo("Admin");
+
+            if (username == "admin" && password == "admin")
+            {
+                NavigationManager.NavigateTo("Admin");
+            }
         }
+
+        if (userRole == "author")
+        {
+            // find user data by username and check password
+            if(/*do the check*/username=="author"){
+                NavigationManager.NavigateTo("Author");
+            }
+        }
+        if (userRole == "reviewer")
+        {
+            // find user data by username and check password
+            if(/*do the check*/username=="reviewer"){
+                NavigationManager.NavigateTo("Reviewer");
+            }
+        }
+
     }
 }

@@ -1,5 +1,9 @@
 ﻿@page "/AuthorTable"
-
+@using DataAccess.Model
+@using DataAccess
+@using Microsoft.Extensions.Configuration
+@inject ISqlAccess _data
+@inject IConfiguration _config
 <div class="navbar">
     <button type="button" class="header-button" onclick="location.href='/Admin'">Home</button>
     <button type="button" class="header-button" onclick="location.href='/PaperTable'">Papers</button>
@@ -8,8 +12,50 @@
     <button type="button" class="header-button" onclick="location.href='/ReviewerTable'">Reviewers</button>
 </div>
 
-<h3>AuthorTable</h3>
+<h3>Author Table</h3>
 
-@code {
+<!DOCTYPE html>
+<html>
+<body>
 
-}
+    <table>
+        <tr>
+            <th>First Name</th>
+            <th>M.</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Affiliation</th>
+            <th>Department</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>ZipCode</th>
+            <th>PhoneNumber</th>
+        </tr>
+        @foreach (var user in currAuthors)
+        {
+<tr>
+    <td>@user.FirstName</td>
+    <td>@user.MiddleInitial</td>
+    <td>@user.LastName</td>
+    <td>@user.EmailAddress</td>
+    <td>@user.Password</td>
+    <td>@user.Affiliation</td>
+    <td>@user.Department</td>
+    <td>@user.Address</td>
+    <td>@user.City</td>
+    <td>@user.State</td>
+    <td>@user.ZipCode</td>
+    <td>@user.PhoneNumber</td>
+</tr>}
+    </table>
+
+</body>
+</html>
+@code { private List<RegModel> currAuthors = new List<RegModel>();
+            protected override async Task OnInitializedAsync()
+            {
+                string sql = "SELECT FirstName, MiddleInitial, LastName, Affiliation, Department, Address, City, State, ZipCode, PhoneNumber, EmailAddress, Password FROM Author";
+                currAuthors = await _data.LoadData<RegModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+            } }
