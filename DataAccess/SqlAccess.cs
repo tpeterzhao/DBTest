@@ -15,7 +15,7 @@ namespace DataAccess
         public async Task<List<T>> LoadData<T, U>(string sql, U parameters, string connectionString)
         {
             // The connectionString is used to open a connection to the SQL DB.
-            using (IDbConnection connection = new MySqlConnection(connectionString))
+            using (IDbConnection connection = new SqlConnection(connectionString))
             {
                 // A query is passed through the DB connection.
                 // Await is used to account for the async query.
