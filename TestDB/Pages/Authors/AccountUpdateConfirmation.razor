@@ -1,0 +1,17 @@
+﻿@page "/authorupdated/{authorID}"
+@inject NavigationManager NavigationManager
+<h3>AccountUpdateConfirmation</h3>
+
+<p>Changes to account information has been saved!</p>
+<p>Page will redirect to Homepage in 3 seconds...</p>
+
+@code {      
+    [Parameter]
+    public string authorID { get; set; }
+    protected async override void OnInitialized()
+    {
+        await Task.Delay(3000);
+        NavigationManager.NavigateTo("Author/" + authorID);
+
+    }
+}

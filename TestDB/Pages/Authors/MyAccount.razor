@@ -4,6 +4,7 @@
 @using Microsoft.Extensions.Configuration
 @inject ISqlAccess _data
 @inject IConfiguration _config
+@inject NavigationManager NavigationManager
 
 <div>
     <h3>MyAccount</h3>
@@ -34,7 +35,7 @@
         <input type="text" id="department" placeholder="Department" readonly="@noEdit" @bind="department">
     </div>
     <div>
-        <button onclick="updateAccount()">Save</button>
+        <button @onclick="updateAccount">Save</button>
         <button onclick="location.href='/Author/'+@authorID">Back</button>
     </div>
     <style>
@@ -98,5 +99,6 @@
             emailAddress + "', Password='" +
             password + "' WHERE AuthorID='" + authorID + "'"; 
             _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+        NavigationManager.NavigateTo("authorupdated/"+authorID);
     }
 }
