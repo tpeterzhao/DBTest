@@ -84,19 +84,19 @@
 
     public void updateAccount()
     {
-        string sql = "UPDATE Author SET FirstName="
-            + firstName + ", MiddleInitial="
-            + middleInitial + ", LastName="
-            + lastName + ", Affiliation=" +
-            affiliation + ", Department=" +
-            department + ", Address=" +
-            address + ", City=" +
-            city + ", State=" +
-            state + ", ZipCode=" +
-            zipCode + ", PhoneNumber=" +
-            phoneNumber + ", EmailAddress=" +
-            emailAddress + ", Password=" +
-            password + " WHERE AuthorID='" + authorID + "'"; 
+        string sql = "UPDATE Author SET FirstName='"
+            + firstName + "', MiddleInitial='"
+            + middleInitial + "', LastName='"
+            + lastName + "', Affiliation='" +
+            affiliation + "', Department='" +
+            department + "', Address='" +
+            address + "', City='" +
+            city + "', State='" +
+            state + "', ZipCode='" +
+            zipCode + "', PhoneNumber='" +
+            phoneNumber + "', EmailAddress='" +
+            emailAddress + "', Password='" +
+            password + "' WHERE AuthorID='" + authorID + "'"; 
             _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
     }
 }
