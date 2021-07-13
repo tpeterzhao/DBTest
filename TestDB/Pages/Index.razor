@@ -45,7 +45,7 @@
             // query user data by email
             List<RegModel> currAuthors = new List<RegModel>();
 
-            string sql = "SELECT Password FROM Author WHERE EmailAddress='" + email + "'";
+            string sql = "SELECT AuthorID, Password FROM Author WHERE EmailAddress='" + email + "'";
             currAuthors = await _data.LoadData<RegModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
 
             if(currAuthors.Count == 0)
@@ -62,8 +62,6 @@
             // check if password is correct
             if (/*do the check*/password==p)
             {
-                //BUG: !!!!! AuthorID is always 0 !!!!!
-                await JS.InvokeAsync<string>("alert", "AuthorID: "+author.AuthorID);
                 // pass authorID as parameter to author page
                 NavigationManager.NavigateTo("Author/" + authorID);
             }
