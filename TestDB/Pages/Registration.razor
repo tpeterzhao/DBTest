@@ -35,95 +35,104 @@
         <input type="checkbox" name="" value="Reviewer" @onchange="toggleReviewer">
         <label>Are you a reviewer?</label>
     </div>
-    <div hidden="@isReviewer">
+    <div hidden="@isAuthor">
         <br>
         <label>Interested Topics:</label>
         <div>
-            <input type="checkbox" name="AoA">
+            <input type="checkbox" name="AoA" @bind="AoA">
             <label for="AoA">Analysis of Algorithms</label>
-            <input type="checkbox">
-            <label>Distributed Systems</label>
-            <input type="checkbox">
-            <label>Mathematics in Computing</label>
-            <input type="checkbox">
-            <label>Research</label>
+            <input type="checkbox" name="application" @bind="application" />
+            <label for="application">Application</label>
+            <input type="checkbox" name="architecture" @bind="architecture" />
+            <label for="archtecture">Architecture</label>
+            <input type="checkbox" name="AI" @bind="AI">
+            <label for="AI">Artificial Intelligence</label>
+            <input type="checkbox" name="CE" @bind="CE">
+            <label for="CE">Computer Engineering</label>
+        </div>
+
+        <div>
+            <input type="checkbox" name="curriculum" @bind="curriculum">
+            <label for="curriculum">Curriculum</label>
+            <input type="checkbox" name="DS" @bind="DS">
+            <label for="DS">Data Structures</label>
+            <input type="checkbox" name="database" @bind="database" />
+            <label for="database">Database</label>
+            <input type="checkbox" name="DL" @bind="DL" />
+            <label for="DL">Distanced Learning</label>            
+            <input type="checkbox" name="DSys" @bind="DSys">
+            <label for="DSys">Distributed Systems</label>
+
+
         </div>
         <div>
-            <input type="checkbox">
-            <label>Applications</label>
-            <input type="checkbox" name="E/S">
-            <label for="E/S">Ethical/Social Issues</label>
-            <input type="checkbox">
-            <label>Multimedia</label>
-            <input type="checkbox">
-            <label>Security</label>
+            <input type="checkbox" name="ESI" @bind="ESI">
+            <label for="ESI">Ethical/Social Issues</label>
+            <input type="checkbox" name="FYC" @bind="FYC">
+            <label for="FYC">First Year Computing</label>
+            <input type="checkbox" name="GI" @bind="GI">
+            <label for="GI">Gender Issues</label>
+            <input type="checkbox" name="GW" @bind="GW">
+            <label for="GW">Grant Writing</label>
+            <input type="checkbox" name="GIP" @bind="GIP">
+            <label for="GIP">Graphics Image Processing</label>
+
         </div>
         <div>
-            <input type="checkbox">
-            <label>Architecture</label>
-            <input type="checkbox">
-            <label>First Year Computing</label>
-            <input type="checkbox">
-            <label>Networking/Data Communications</label>
-            <input type="checkbox">
-            <label>Software Engineering</label>
+            <input type="checkbox" name="HCI" @bind="HCI">
+            <label for="HCI">Human Computer Interaction</label>
+            <input type="checkbox" name="LE" @bind="LE">
+            <label for="LE">Laboratory Environments</label>
+            <input type="checkbox" name="literacy" @bind="literacy" />
+            <label for="literacy">Literacy</label>
+            <input type="checkbox" name="MIC" @bind="MIC">
+            <label for="MIC">Mathematics in Computing</label>
+            <input type="checkbox" name="multimedia" @bind="multimedia">
+            <label for="multimedia">Multimedia</label>
+
+
         </div>
         <div>
-            <input type="checkbox">
-            <label>Artificial Intelligence</label>
-            <input type="checkbox">
-            <label>Gender Issues</label>
-            <input type="checkbox">
-            <label>Non-Major Courses</label>
-            <input type="checkbox">
-            <label>Systems Analysis and Design</label>
+            <input type="checkbox" name="NDC" @bind="NDC">
+            <label for="NDC">Networking/Data Communications</label>
+            <input type="checkbox" name="NMC" @bind="NMC">
+            <label for="NMC">Non-Major Courses</label>
+            <input type="checkbox" name="OOI" @bind="OOI">
+            <label for="OOI">Object Oriented Issues</label>
+            <input type="checkbox" name="OS" @bind="OS">
+            <label for="OS">Operating Systems</label>
+            <input type="checkbox" name="PP" @bind="PP">
+            <label for="PP">Parallel Processing</label>
+
+
+
         </div>
         <div>
-            <input type="checkbox">
-            <label>Computer Engineering</label>
-            <input type="checkbox">
-            <label>Grant Writing</label>
-            <input type="checkbox">
-            <label>Object Oriented Issues</label>
-            <input type="checkbox">
-            <label>Using Technology in the Classroom</label>
+            <input type="checkbox" name="pedagogy" @bind="pedagogy">
+            <label for="pedagogy">Pedagogy</label>
+            <input type="checkbox" name="PL" @bind="PL">
+            <label for="PL">Programming Languages</label>
+            <input type="checkbox" name="research" @bind="research">
+            <label for="research">Research</label>
+            <input type="checkbox" name="security" @bind="security">
+            <label for="security">Security</label>
+            <input type="checkbox" name="SE" @bind="SE">
+            <label for="SE">Software Engineering</label>
+
         </div>
         <div>
-            <input type="checkbox">
-            <label>Curriculum</label>
-            <input type="checkbox">
-            <label>Graphics Image Processing</label>
-            <input type="checkbox">
-            <label>Operating Systems</label>
-            <input type="checkbox">
-            <label>Web and Internet Programming</label>
+            <input type="checkbox" name="SAAD" @bind="SAAD">
+            <label for="SAAD">Systems Analysis and Design</label>
+            <input type="checkbox" name="UTITC" @bind="UTITC">
+            <label for="UTITC">Using Technology in the Classroom</label>
+            <input type="checkbox" name="WAIP" @bind="WAIP">
+            <label for="WAIP">Web and Internet Programming</label>
+
         </div>
         <div>
-            <input type="checkbox">
-            <label>Data Structures</label>
-            <input type="checkbox">
-            <label>Human Computer Interaction</label>
-            <input type="checkbox">
-            <label>Parallel Processing</label>
-            <input type="checkbox">
-            <label>Database</label>
-        </div>
-        <div>
-            <input type="checkbox">
-            <label>Laboratory Environments</label>
-            <input type="checkbox">
-            <label>Pedagogy</label>
-            <input type="checkbox">
-            <label>Distance Learning</label>
-            <input type="checkbox">
-            <label>Literacy</label>
-        </div>
-        <div>
-            <input type="checkbox">
-            <label>Programming Languages</label>
-            <input type="checkbox">
-            <label>Other(Describe)</label>
-            <input type="text" name="" value="">
+            <input type="checkbox" name="other" @bind="other">
+            <label for="other">Other(Describe)</label>
+            <input type="text" @bind="otherDescription">
         </div>
         <br>
     </div>
@@ -141,17 +150,36 @@
 </div>
 
 @code {
-    bool isReviewer { get; set; } = true;
+    bool isAuthor { get; set; } = true;
 
     private void toggleReviewer()
     {
-        isReviewer = !isReviewer;
+        isAuthor = !isAuthor;
     }
 
-    string firstName, middleInitial, lastName, affiliation, department, address, city, zipCode, state, emailAddress, phoneNumber, password;
+    string firstName, middleInitial, lastName, affiliation, department, address, city, zipCode, state, emailAddress, phoneNumber, password, otherDescription;
+    bool AoA, application, architecture, AI, CE, curriculum, DS, database, DL, DSys, ESI, FYC, GI, GW, GIP, HCI, LE, literacy, MIC, multimedia, NDC, NMC, OOI, OS, PP, pedagogy, PL, research, security, SE, SAAD, UTITC, WAIP, other;
+
     private Task addUser()
     {
-        string sql = "INSERT INTO Author (FirstName, MiddleInitial, LastName, Affiliation, Department, Address, City, State, ZipCode, PhoneNumber, EmailAddress, Password) VALUES (" + "'" + firstName + "', '" + middleInitial + "', '" + lastName + "', '" + affiliation + "', '" + department + "', '" + address + "', '" + city + "', '" + state + "', '" + zipCode + "', '" + phoneNumber + "', '" + emailAddress + "', '" + password + "')";
-        return _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+        if (isAuthor)
+        {
+            string sql = "INSERT INTO Author (FirstName, MiddleInitial, LastName, Affiliation, Department, Address, City, State, ZipCode, PhoneNumber, EmailAddress, Password) VALUES (" + "'" + firstName + "', '" + middleInitial + "', '" + lastName + "', '" + affiliation + "', '" + department + "', '" + address + "', '" + city + "', '" + state + "', '" + zipCode + "', '" + phoneNumber + "', '" + emailAddress + "', '" + password + "')";
+            return _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+        }
+        else
+        {
+            string sql = "INSERT INTO Reviewer (FirstName, MiddleInitial, LastName, Affiliation, Department, Address, City, State, ZipCode, PhoneNumber, EmailAddress, Password" +
+                    "AnalysisOfAlgorithms, Applications, Architecture, ArtificialIntelligence, ComputerEngineering, Curriculum, DataStructure, Database, DistancedLearning, DistributedSystems" +
+                    "EthicalSocietalIssues, FirstYearComputing, GenderIssues, GrantWriting, GraphicsImageProcessing, HumanComputerInteraction, LaboratoryEnvironments, Literacy, MathematicsInComputing" +
+                    "Multimedia, NetworkingDataCommunications, NonMajorCourses, ObjectOrientedIssues, OperatingSystems, ParallelProcessing, Pedagogy, ProgrammingLanguage, Research, Security, " +
+                    "SoftwareEngineering, SystemAnalysisAndDesign, UsingTechnologyInTheClassroom, WebAndInternetProgramming, Other, OtherDescription) VALUES (" + "'" + firstName + "', '" + middleInitial + "', '" + lastName 
+                    + "', '" + affiliation + "', '" + department + "', '" + address + "', '" + city + "', '" + state + "', '" + zipCode + "', '" + phoneNumber + "', '" + emailAddress + "', '" + password + "', '" 
+                    + AoA + "', '" + application + "', '" + architecture + "', '" + AI + "', '" + CE + "', '" + curriculum + "', '" + DS + "', '" + database + "', '" + DL + "', '" + DSys 
+                    + "', '" + ESI + "', '" + FYC + "', '" + GI + "', '" + GI + "', '" + GIP + "', '" + HCI + "', '" + LE + "', '" + literacy + "', '" + MIC + "', '" + multimedia + "', '" 
+                    + NDC + "', '" + NMC + "', '" + OOI + "', '" + OS + "', '" + PP + "', '" + pedagogy + "', '" + PL + "', '" + research + "', '" + security + "', '" + SE + "', '" + SAAD + "', '" + UTITC + "', '" 
+                    + WAIP + "', '" + other + "', '"  + otherDescription + "')";
+            return _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+        }
     }
 }
