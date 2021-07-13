@@ -1,9 +1,15 @@
 ﻿@page "/"
 @inject NavigationManager NavigationManager
+@using DataAccess.Model
+@using DataAccess
+@using Microsoft.Extensions.Configuration
+@inject ISqlAccess _data
+@inject IConfiguration _config
+@inject IJSRuntime JS
 <div class="all">
     <div class="content">
         <h2>Log in</h2>
-        <input type="text" class="content-item" placeholder="Username" @bind="username">
+        <input type="text" class="content-item" placeholder="Email" @bind="email">
         <input type="password" class="content-item" placeholder="Password" @bind="password">
         <label for="role">Log in as: </label>
         <select name="role" id="role" class="content-item" @bind="userRole">
@@ -21,12 +27,12 @@
 </div>
 
 @code{
-    string username, password, userRole;
-    private void login()
+    string email, password, userRole;
+    private async void login()
     {
         if (userRole == "admin")
         {
-            if (username == "admin" && password == "admin")
+            if (email == "admin" && password == "admin")
             {
                 NavigationManager.NavigateTo("Admin");
             }
@@ -34,16 +40,42 @@
 
         if (userRole == "author")
         {
-            // find user data by username and check password
-            if(/*do the check*/username=="author"){
-                NavigationManager.NavigateTo("Author");
+            // find user data by email and check password
+
+            // query user data by email
+            List<RegModel> currAuthors = new List<RegModel>();
+
+            string sql = "SELECT Password FROM Author WHERE EmailAddress='" + email + "'";
+            currAuthors = await _data.LoadData<RegModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+
+            if(currAuthors.Count == 0)
+            {
+                // if no matching user
+
+                await JS.InvokeAsync<string>("alert", "Wrong username or password!");
+                return;
+            }
+            RegModel author = currAuthors.FirstOrDefault();
+            string p = author.Password;
+            int authorID = author.AuthorID;
+
+            // check if password is correct
+            if (/*do the check*/password==p)
+            {
+                //BUG: !!!!! AuthorID is always 0 !!!!!
+                await JS.InvokeAsync<string>("alert", "AuthorID: "+author.AuthorID);
+                // pass authorID as parameter to author page
+                NavigationManager.NavigateTo("Author/" + authorID);
             }
         }
+
         if (userRole == "reviewer")
         {
             // find user data by username and check password
-            if(/*do the check*/username=="reviewer"){
-                NavigationManager.NavigateTo("Reviewer");
+            if (/*do the check*/email == "reviewer")
+            {
+                var userID = 0; // get userID from database
+                NavigationManager.NavigateTo("Reviewer/" + userID);
             }
         }
 

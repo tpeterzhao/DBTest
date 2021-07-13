@@ -6,6 +6,7 @@ namespace DataAccess.Model
 {
     public class RegModel
     {
+        public int AuthorID { get; set; }
         public string FirstName { get; set; }
         public string MiddleInitial { get; set; }
         public string LastName { get; set; }

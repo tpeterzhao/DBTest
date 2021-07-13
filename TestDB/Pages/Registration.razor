@@ -32,99 +32,101 @@
         <input type="text" id="department" placeholder="Department" @bind="department">
     </div>
     <div>
-        <input type="checkbox" name="" value="Reviewer">
+        <input type="checkbox" name="" value="Reviewer" @onchange="toggleReviewer">
         <label>Are you a reviewer?</label>
     </div>
-    <br>
-    <label>Interested Topics:</label>
-    <div>
-        <input type="checkbox" name="AoA">
-        <label for="AoA">Analysis of Algorithms</label>
-        <input type="checkbox">
-        <label>Distributed Systems</label>
-        <input type="checkbox">
-        <label>Mathematics in Computing</label>
-        <input type="checkbox">
-        <label>Research</label>
+    <div hidden="@isReviewer">
+        <br>
+        <label>Interested Topics:</label>
+        <div>
+            <input type="checkbox" name="AoA">
+            <label for="AoA">Analysis of Algorithms</label>
+            <input type="checkbox">
+            <label>Distributed Systems</label>
+            <input type="checkbox">
+            <label>Mathematics in Computing</label>
+            <input type="checkbox">
+            <label>Research</label>
+        </div>
+        <div>
+            <input type="checkbox">
+            <label>Applications</label>
+            <input type="checkbox" name="E/S">
+            <label for="E/S">Ethical/Social Issues</label>
+            <input type="checkbox">
+            <label>Multimedia</label>
+            <input type="checkbox">
+            <label>Security</label>
+        </div>
+        <div>
+            <input type="checkbox">
+            <label>Architecture</label>
+            <input type="checkbox">
+            <label>First Year Computing</label>
+            <input type="checkbox">
+            <label>Networking/Data Communications</label>
+            <input type="checkbox">
+            <label>Software Engineering</label>
+        </div>
+        <div>
+            <input type="checkbox">
+            <label>Artificial Intelligence</label>
+            <input type="checkbox">
+            <label>Gender Issues</label>
+            <input type="checkbox">
+            <label>Non-Major Courses</label>
+            <input type="checkbox">
+            <label>Systems Analysis and Design</label>
+        </div>
+        <div>
+            <input type="checkbox">
+            <label>Computer Engineering</label>
+            <input type="checkbox">
+            <label>Grant Writing</label>
+            <input type="checkbox">
+            <label>Object Oriented Issues</label>
+            <input type="checkbox">
+            <label>Using Technology in the Classroom</label>
+        </div>
+        <div>
+            <input type="checkbox">
+            <label>Curriculum</label>
+            <input type="checkbox">
+            <label>Graphics Image Processing</label>
+            <input type="checkbox">
+            <label>Operating Systems</label>
+            <input type="checkbox">
+            <label>Web and Internet Programming</label>
+        </div>
+        <div>
+            <input type="checkbox">
+            <label>Data Structures</label>
+            <input type="checkbox">
+            <label>Human Computer Interaction</label>
+            <input type="checkbox">
+            <label>Parallel Processing</label>
+            <input type="checkbox">
+            <label>Database</label>
+        </div>
+        <div>
+            <input type="checkbox">
+            <label>Laboratory Environments</label>
+            <input type="checkbox">
+            <label>Pedagogy</label>
+            <input type="checkbox">
+            <label>Distance Learning</label>
+            <input type="checkbox">
+            <label>Literacy</label>
+        </div>
+        <div>
+            <input type="checkbox">
+            <label>Programming Languages</label>
+            <input type="checkbox">
+            <label>Other(Describe)</label>
+            <input type="text" name="" value="">
+        </div>
+        <br>
     </div>
-    <div>
-        <input type="checkbox">
-        <label>Applications</label>
-        <input type="checkbox" name="E/S">
-        <label for="E/S">Ethical/Social Issues</label>
-        <input type="checkbox">
-        <label>Multimedia</label>
-        <input type="checkbox">
-        <label>Security</label>
-    </div>
-    <div>
-        <input type="checkbox">
-        <label>Architecture</label>
-        <input type="checkbox">
-        <label>First Year Computing</label>
-        <input type="checkbox">
-        <label>Networking/Data Communications</label>
-        <input type="checkbox">
-        <label>Software Engineering</label>
-    </div>
-    <div>
-        <input type="checkbox">
-        <label>Artificial Intelligence</label>
-        <input type="checkbox">
-        <label>Gender Issues</label>
-        <input type="checkbox">
-        <label>Non-Major Courses</label>
-        <input type="checkbox">
-        <label>Systems Analysis and Design</label>
-    </div>
-    <div>
-        <input type="checkbox">
-        <label>Computer Engineering</label>
-        <input type="checkbox">
-        <label>Grant Writing</label>
-        <input type="checkbox">
-        <label>Object Oriented Issues</label>
-        <input type="checkbox">
-        <label>Using Technology in the Classroom</label>
-    </div>
-    <div>
-        <input type="checkbox">
-        <label>Curriculum</label>
-        <input type="checkbox">
-        <label>Graphics Image Processing</label>
-        <input type="checkbox">
-        <label>Operating Systems</label>
-        <input type="checkbox">
-        <label>Web and Internet Programming</label>
-    </div>
-    <div>
-        <input type="checkbox">
-        <label>Data Structures</label>
-        <input type="checkbox">
-        <label>Human Computer Interaction</label>
-        <input type="checkbox">
-        <label>Parallel Processing</label>
-        <input type="checkbox">
-        <label>Database</label>
-    </div>
-    <div>
-        <input type="checkbox">
-        <label>Laboratory Environments</label>
-        <input type="checkbox">
-        <label>Pedagogy</label>
-        <input type="checkbox">
-        <label>Distance Learning</label>
-        <input type="checkbox">
-        <label>Literacy</label>
-    </div>
-    <div>
-        <input type="checkbox">
-        <label>Programming Languages</label>
-        <input type="checkbox">
-        <label>Other(Describe)</label>
-        <input type="text" name="" value="">
-    </div>
-    <br>
     <div style="display:grid; justify-content: center;">
         <label>Sign up</label>
         <input type="password" name="password" id="password" placeholder="Password" style="width: 300px;" @bind="password">
@@ -139,6 +141,13 @@
 </div>
 
 @code {
+    bool isReviewer { get; set; } = true;
+
+    private void toggleReviewer()
+    {
+        isReviewer = !isReviewer;
+    }
+
     string firstName, middleInitial, lastName, affiliation, department, address, city, zipCode, state, emailAddress, phoneNumber, password;
     private Task addUser()
     {

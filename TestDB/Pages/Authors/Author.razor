@@ -1,5 +1,9 @@
-﻿@page "/Author"
-
+﻿@page "/Author/{userID}"
+@using DataAccess.Model
+@using DataAccess
+@using Microsoft.Extensions.Configuration
+@inject ISqlAccess _data
+@inject IConfiguration _config
 @*Two navbar tabs, "My Papers" and "My Account"
     "My Papers" tab shows a list of all papers author has submitted(AuthorID == currentAuthorID in Database)
     "My Account" tab shows Details.cshtml page in Authors table
@@ -13,3 +17,19 @@
 </div>
 
 <h1>Author</h1>
+<h3>Welcome, @firstName!</h3>
+
+@code{[Parameter]
+    public string userID { get; set; }
+
+    public string firstName { get; set; }
+
+    private RegModel currAuthor = new RegModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        string sql = "SELECT FirstName FROM Author WHERE AuthorID='"+userID+"'";
+        currAuthor = await _data.LoadOne<RegModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+        firstName = currAuthor.FirstName;
+    }
+}
