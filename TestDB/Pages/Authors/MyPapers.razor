@@ -1,0 +1,23 @@
+﻿@page "/MyPapers/{authorID}"
+
+@using DataAccess.Model
+@using DataAccess
+@using Microsoft.Extensions.Configuration
+@inject ISqlAccess _data
+@inject IConfiguration _config
+
+<h3>MyPapers</h3>
+
+@code {
+    [Parameter]
+    public string authorID { get; set; }
+
+
+    private RegModel currAuthor = new RegModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        string sql = "SELECT * FROM Paper WHERE AuthorID='" + authorID + "'";
+        currAuthor = await _data.LoadOne<RegModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+    }
+}

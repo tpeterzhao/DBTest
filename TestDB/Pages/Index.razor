@@ -1,6 +1,6 @@
 ﻿@page "/"
 @inject NavigationManager NavigationManager
-@using DataAccess.Model
+@using Models
 @using DataAccess
 @using Microsoft.Extensions.Configuration
 @inject ISqlAccess _data
@@ -43,10 +43,10 @@
             // find user data by email and check password
 
             // query user data by email
-            List<RegModel> currAuthors = new List<RegModel>();
+            List<AuthorModel> currAuthors = new List<AuthorModel>();
 
             string sql = "SELECT AuthorID, Password FROM Author WHERE EmailAddress='" + email + "'";
-            currAuthors = await _data.LoadData<RegModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+            currAuthors = await _data.LoadData<AuthorModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
 
             if(currAuthors.Count == 0)
             {
@@ -55,7 +55,7 @@
                 await JS.InvokeAsync<string>("alert", "Wrong username or password!");
                 return;
             }
-            RegModel author = currAuthors.FirstOrDefault();
+            AuthorModel author = currAuthors.FirstOrDefault();
             string p = author.Password;
             int authorID = author.AuthorID;
 

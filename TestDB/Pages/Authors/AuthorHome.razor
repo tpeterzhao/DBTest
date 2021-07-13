@@ -1,0 +1,43 @@
+﻿@page "/Author/{authorID}"
+
+@using TestDB.Models
+@using DataAccess
+@using Microsoft.Extensions.Configuration
+@inject ISqlAccess _data
+@inject IConfiguration _config
+@*Two navbar tabs, "My Papers" and "My Account"
+    "My Papers" tab shows a list of all papers author has submitted(AuthorID == currentAuthorID in Database)
+    "My Account" tab shows Details.cshtml page in Authors table
+    Logout link at end of navbar*@
+
+<div class="navbar">
+    <button type="button" class="header-button" onclick="location.href='/Author/'+@authorID">Home</button>
+    <button type="button" class="header-button" onclick="location.href='/uploadpaper/'+@authorID">Submit New Paper</button>
+    <button type="button" class="header-button">My Paper</button>
+    <button type="button" class="header-button" onclick="location.href = '/AuthorAccount/'+@authorID">My Account</button>
+</div>
+
+<h1>Author</h1>
+<h3>Welcome, @firstName @lastName</h3>
+<p>
+    Add some message here!
+</p>
+
+
+@code{
+    [Parameter]
+    public string authorID { get; set; }
+
+    public string firstName { get; set; }
+    public string lastName { get; set; }
+
+    public AuthorModel author = new AuthorModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        string sql = "SELECT * FROM Author WHERE AuthorID='" + authorID + "'";
+        author = await _data.LoadOne<AuthorModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+        firstName = author.FirstName;
+        lastName = author.LastName;
+    }
+}

@@ -1,0 +1,102 @@
+﻿@page "/AuthorAccount/{authorID}"
+@using TestDB.Models
+@using DataAccess
+@using Microsoft.Extensions.Configuration
+@inject ISqlAccess _data
+@inject IConfiguration _config
+
+<div>
+    <h3>MyAccount</h3>
+
+   
+    <div>
+        <label for="firstname">Name:</label>
+        <input type="text" name="firstname" id="firstname" placeholder="First Name" readonly="@noEdit" @bind="firstName">
+        <input type="text" name="middlename" id="middleInitial" placeholder="Middle Initial" readonly="@noEdit" @bind="middleInitial">
+        <input type="text" name="lastname" id="lastname" placeholder="Last Name" readonly="@noEdit" @bind="lastName"><br />
+    </div>
+    <div>
+        <label for="phonenumber">Contact Information:</label>
+        <input type="text" id="phonenumber" placeholder="Phone Number" readonly="@noEdit" @bind="phoneNumber">
+        <input type="text" id="email" placeholder="Email" readonly="@noEdit" @bind="emailAddress"><br />
+    </div>
+    <div>
+        <label for="streetaddress">Address:</label>
+        <input type="text" id="streetaddress" placeholder="Street Address" style="width:500px;" readonly="@noEdit" @bind="address">
+        <input type="text" id="city" placeholder="City" readonly="@noEdit" @bind="city">
+        <input type="text" id="state" placeholder="State" readonly="@noEdit" @bind="state">
+        <input type="text" id="zipcode" placeholder="ZipCode" readonly="@noEdit" @bind="zipCode">
+    </div>
+
+    <div>
+        <label for="affiliation">Academics:</label>
+        <input type="text" id="affiliation" placeholder="Affiliation" readonly="@noEdit" @bind="affiliation">
+        <input type="text" id="department" placeholder="Department" readonly="@noEdit" @bind="department">
+    </div>
+    <div>
+        <button onclick="updateAccount()">Save</button>
+        <button onclick="location.href='/Author/'+@authorID">Back</button>
+    </div>
+    <style>
+        input:read-only{
+            border:none;
+        }
+    </style>
+</div>
+
+@code {
+    [Parameter]
+    public string authorID { get; set; }
+
+    public string firstName { get; set; }
+    public string lastName { get; set; }
+    public string middleInitial { get; set; }
+    public string phoneNumber { get; set; }
+    public string emailAddress { get; set; }
+    public string address { get; set; }
+    public string city { get; set; }
+    public string state { get; set; }
+    public string zipCode { get; set; }
+    public string affiliation { get; set; }
+    public string department { get; set; }
+    public string password { get; set; }
+    public bool noEdit { get; set; } = false;
+
+    public AuthorModel author = new AuthorModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        string sql = "SELECT * FROM Author WHERE AuthorID='" + authorID + "'";
+        author = await _data.LoadOne<AuthorModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+        firstName = author.FirstName;
+        middleInitial = author.MiddleInitial;
+        lastName = author.LastName;
+        phoneNumber = author.PhoneNumber;
+        emailAddress = author.EmailAddress;
+        address = author.Address;
+        city = author.City;
+        state = author.State;
+        zipCode = author.ZipCode;
+        affiliation = author.Affiliation;
+        department = author.Department;
+        password = author.Password;
+    }
+
+    public void updateAccount()
+    {
+        string sql = "UPDATE Author SET FirstName="
+            + firstName + ", MiddleInitial="
+            + middleInitial + ", LastName="
+            + lastName + ", Affiliation=" +
+            affiliation + ", Department=" +
+            department + ", Address=" +
+            address + ", City=" +
+            city + ", State=" +
+            state + ", ZipCode=" +
+            zipCode + ", PhoneNumber=" +
+            phoneNumber + ", EmailAddress=" +
+            emailAddress + ", Password=" +
+            password + " WHERE AuthorID='" + authorID + "'"; 
+            _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+    }
+}
