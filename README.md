@@ -1,6 +1,6 @@
 # DBTest
 TODO:
-1. Admin Homepage
+1. Admin Homepage (done)
 2. Maintenance page for 
    a. Papers
    b. Authors
