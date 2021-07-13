@@ -3,16 +3,14 @@
   color: white;
   background-color: #777777;
   height: 150px;
-  margin: 50px, 0, 0, 20px;
-  padding: 50px, 0, 0, 20px;
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
 }
-.logo{
-  display: flex;
-  flex-direction: row;
-  font-size: 20px;
+.logo {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
 }
 .navbar{
   display: flex;
@@ -24,8 +22,6 @@
   padding: 20px;
   background: #cccccc;
   font-size: 15px;
-  border: 0;
-  margin: 0;
 }
 .header-button:hover{
   background-color: #eeeeee;
@@ -36,7 +32,6 @@
   grid-template-columns: auto;
   justify-content: space-around;
   align-items: center;
-  margin-top: 10px;
 }
 .content-item{
   width: 300px;
@@ -74,5 +69,10 @@ tr:nth-child(even){
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin: 0;
+}
+
+body{
+    border: 0px;
+    margin: 0;
+    padding: 0;
 }
