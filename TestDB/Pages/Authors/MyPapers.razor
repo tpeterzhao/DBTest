@@ -1,23 +1,61 @@
 ﻿@page "/MyPapers/{authorID}"
 
-@using DataAccess.Model
+@using TestDB.Models
 @using DataAccess
 @using Microsoft.Extensions.Configuration
 @inject ISqlAccess _data
 @inject IConfiguration _config
 
+<div class="navbar">
+    <button type="button" class="header-button" onclick="location.href='/Author/'+@authorID">Home</button>
+    <button type="button" class="header-button" onclick="location.href='/UploadPaper/'+@authorID">Submit New Paper</button>
+    <button type="button" class="header-button" onclick="location.href='/MyPapers/'+@authorID">My Paper</button>
+    <button type="button" class="header-button" onclick="location.href = '/AuthorAccount/'+@authorID">My Account</button>
+</div>
+
 <h3>MyPapers</h3>
 
+<table>
+    <tr>
+        <th>Paper ID</th>
+        <th>Original Filename</th>
+        <th>Filename</th>
+        <th>Title</th>
+        <th>Certification</th>
+        <th>Description</th>
+        <th>Topics</th>
+        <th>Edit</th>
+    </tr>
+    @foreach (var paper in papers)
+    {
+        <tr>
+            <td>@paper.PaperID</td>
+            <td>@paper.FilenameOriginal</td>
+            <td>@paper.Filename</td>
+            <td>@paper.Title</td>
+            <td>@paper.Certification</td>
+            <td>@paper.OD</td>
+            <td>
+                <button type="submit" name="button" onclick="location.href='/PaperTableTopics/' + @paper.PaperID">Click Here</button><br>
+            </td>
+            <td>
+                <button type="submit" name="button" onclick="location.href='/PaperTableModify/' + @paper.PaperID">Modify</button><br>
+                <form onsubmit="location.href = '/MyPapers/'+@authorID">
+                </form>
+            </td>
+        </tr>
+    }
+</table>
 @code {
     [Parameter]
     public string authorID { get; set; }
 
 
-    private RegModel currAuthor = new RegModel();
+    private List<Paper> papers = new List<Paper>();
 
     protected override async Task OnInitializedAsync()
     {
         string sql = "SELECT * FROM Paper WHERE AuthorID='" + authorID + "'";
-        currAuthor = await _data.LoadOne<RegModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+        papers = await _data.LoadData<Paper, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
     }
 }

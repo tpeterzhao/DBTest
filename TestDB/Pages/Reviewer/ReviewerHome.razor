@@ -6,10 +6,10 @@
 @inject IConfiguration _config
 
 <div class="navbar">
-    <button type="button" class="header-button" onclick="location.href='/Author/'+@reviewerID">Home</button>
-    <button type="button" class="header-button" onclick="location.href='/uploadpaper/'+@reviewerID">Submit New Paper</button>
-    <button type="button" class="header-button">My Paper</button>
-    <button type="button" class="header-button" onclick="location.href = '/AuthorAccount/' +@reviewerID">My Account</button>
+    <button type="button" class="header-button" onclick="location.href='/Reviewer/'+@reviewerID">Home</button>
+    <button type="button" class="header-button" onclick="location.href='/UploadReview/'+@reviewerID">Submit New Review</button>
+    <button type="button" class="header-button" onclick="location.href='/MyReviews/'+@reviewerID">My Review</button>
+    <button type="button" class="header-button" onclick="location.href = '/ReviewerAccount/' +@reviewerID">My Account</button>
 </div>
 
 <h1>Reviewer</h1>
@@ -26,14 +26,13 @@
     public string firstName { get; set; }
     public string lastName { get; set; }
 
-    public AuthorModel author = new AuthorModel();
+    public Reviewer reviewer = new Reviewer();
 
     protected override async Task OnInitializedAsync()
     {
-        string sql = "SELECT * FROM Reviewer WHERE AuthorID='" + reviewerID + "'";
-        author = await _data.LoadOne<AuthorModel, dynamic>
-    (sql, new { }, _config.GetConnectionString("DefaultConnection"));
-    firstName = author.FirstName;
-    lastName = author.LastName;
+        string sql = "SELECT * FROM Reviewer WHERE ReviewerID='" + reviewerID + "'";
+        reviewer = await _data.LoadOne<Reviewer, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+        firstName = reviewer.FirstName;
+        lastName = reviewer.LastName;
     }
 }

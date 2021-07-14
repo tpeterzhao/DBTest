@@ -10,6 +10,7 @@ namespace TestDB.Models
     public class Reviewer
     {
         public int ReviewerID { get; set; }
+        public bool Active { get; set; }
         [StringLength(50), Required]
         public string FirstName { get; set; }
         [StringLength(1)]

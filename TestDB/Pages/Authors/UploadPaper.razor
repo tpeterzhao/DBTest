@@ -1,4 +1,11 @@
-﻿@page "/uploadpaper/{authorID}"
+﻿@page "/UploadPaper/{authorID}"
+
+<div class="navbar">
+    <button type="button" class="header-button" onclick="location.href='/Author/'+@authorID">Home</button>
+    <button type="button" class="header-button" onclick="location.href='/UploadPaper/'+@authorID">Submit New Paper</button>
+    <button type="button" class="header-button" onclick="location.href='/MyPapers/'+@authorID">My Paper</button>
+    <button type="button" class="header-button" onclick="location.href = '/AuthorAccount/'+@authorID">My Account</button>
+</div>
 
 <div class="content">
     

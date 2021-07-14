@@ -1,5 +1,101 @@
-﻿<h3>UploatReview</h3>
+﻿@page "/UploadReview/{reviewerID}"
 
+
+
+<div class="navbar">
+    <button type="button" class="header-button" onclick="location.href='/Reviewer/'+@reviewerID">Home</button>
+    <button type="button" class="header-button" onclick="location.href='/UploadReview/'+@reviewerID">Submit New Review</button>
+    <button type="button" class="header-button" onclick="location.href='/MyReviews/'+@reviewerID">My Paper</button>
+    <button type="button" class="header-button" onclick="location.href = '/ReviewerAccount/' +@reviewerID">My Account</button>
+</div>
+
+
+<h1>UploatReview</h1>
+
+<h3>Review Submission Form:</h3>
+<form action="/action_page.php" class="content">
+    <div class="content-item">
+        <label for="ReviewerID">ReviewerID: </label>
+        <input type="text" id="ReviewerID" name="ReviewerID">
+    </div>
+
+    <label>For the following ratings please rate the paper on a score from 0.00 to 5.00</label>
+
+
+    <div class="content-item">
+        <label for="AppropriatenessOfTopic">Appropriateness of the Topic:</label>
+        <input type="number" id="AppropriatenessOfTopic" name="AppropriatenessOfTopic" step="0.01" min="0" max="100"><br />
+
+        <label for="TimelinessOfTopic">Timeliness of the Topic:</label>
+        <input type="number" id="TimelinessOfTopic" name="TimelinessOfTopic" step="0.01" min="0" max="100"><br />
+
+        <label for="SupportiveEvidence">Supportive Evidence:</label>
+        <input type="number" id="SupportiveEvidence" name="SupportiveEvidence" step="0.01" min="0" max="100"><br />
+
+        <label for="TechnicalQuality">Technical Quality:</label>
+        <input type="number" id="TechnicalQuality" name="TechnicalQuality" step="0.01" min="0" max="100"><br />
+
+        <label for="ScopeOfCoverage">Scope of Coverage:</label>
+        <input type="number" id="ScopeOfCoverage" name="ScopeOfCoverage" step="0.01" min="0" max="100"><br />
+
+        <label for="CitationOfPreviousWork">Citation of Previous Work:</label>
+        <input type="number" id="CitationOfPreviousWork" name="CitationOfPreviousWork" step="0.01" min="0" max="100"><br />
+
+        <label for="Originality">Originality:</label>
+        <input type="number" id="Originality" name="Originality" step="0.01" min="0" max="100"><br />
+
+        <label for="ContentComments">Content Comments: </label><br />
+        <textarea id="ContentComments" name="ContentComments" rows="5" cols="75"></textarea><br />
+    </div>
+
+
+    <div class="content-item">
+        <label for="OrganizationOfPaper">Organization Of Paper:</label>
+        <input type="number" id="OrganizationOfPaper" name="OrganizationOfPaper" step="0.01" min="0" max="100"><br />
+
+        <label for="ClarityOfMainMessage">Clarity of Main Message:</label>
+        <input type="number" id="ClarityOfMainMessage" name="ClarityOfMainMessage" step="0.01" min="0" max="100"><br />
+
+        <label for="Mechanics">Mechanics:</label>
+        <input type="number" id="Mechanics" name="Mechanics" step="0.01" min="0" max="100"><br />
+
+        <label for="WrittenDocumentComments">Written Document Comments: </label><br>
+        <textarea id="WrittenDocumentComments" name="WrittenDocumentComments" rows="5" cols="75"></textarea><br />
+    </div>
+
+    <div class="content-item">
+        <label for="SuitabilityForPresentation">Suitability For Presentation:</label>
+        <input type="number" id="SuitabilityForPresentation" name="SuitabilityForPresentation" step="0.01" min="0" max="100"><br />
+
+        <label for="PotentialInterestInTopic">Potential Interest in Topic:</label>
+        <input type="number" id="PotentialInterestInTopic" name="PotentialInterestInTopic" step="0.01" min="0" max="100"><br />
+
+        <label for="PotentialForOralPresentationComments">Potential for Oral Presenation Comments: </label><br>
+        <textarea id="PotentialForOralPresentationComments" name="PotentialForOralPresentationComments" rows="5" cols="75"></textarea><br />
+    </div>
+
+
+    <div class="content-item">
+        <label for="OverallRating">Overall Rating:</label>
+        <input type="number" id="OverallRating" name="OverallRating" step="0.01" min="0" max="100"><br />
+
+        <label for="OverallRatingComments">Overall Rating Comments: </label><br />
+        <textarea id="OverallRatingComments" name="OverallRatingComments" rows="5" cols="75"></textarea><br />
+    </div>
+
+
+    <div class="content-item">
+        <label for="ComfortLevelTopic">Comfort Level Topic:</label>
+        <input type="number" id="ComfortLevelTopic" name="ComfortLevelTopic" step="0.01" min="0" max="100"><br />
+
+        <label for="ComfortLevelAcceptability">Comfort Level Acceptability:</label>
+        <input type="number" id="ComfortLevelAcceptability" name="ComfortLevelAcceptability" step="0.01" min="0" max="100"><br />
+    </div>
+
+    <input type="submit">
+
+</form>
 @code {
-
+    [Parameter]
+    public string reviewerID { get; set; }
 }

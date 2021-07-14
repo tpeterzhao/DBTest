@@ -1,4 +1,4 @@
-﻿@page "/AuthorAccount/{authorID}"
+﻿@page "/ReviewerAccount/{reviewerID}"
 @using TestDB.Models
 @using DataAccess
 @using Microsoft.Extensions.Configuration
@@ -7,16 +7,16 @@
 @inject NavigationManager NavigationManager
 
 <div class="navbar">
-    <button type="button" class="header-button" onclick="location.href='/Author/'+@authorID">Home</button>
-    <button type="button" class="header-button" onclick="location.href='/UploadPaper/'+@authorID">Submit New Paper</button>
-    <button type="button" class="header-button" onclick="location.href='/MyPapers/'+@authorID">My Paper</button>
-    <button type="button" class="header-button" onclick="location.href = '/AuthorAccount/'+@authorID">My Account</button>
+    <button type="button" class="header-button" onclick="location.href='/Reviewer/'+@reviewerID">Home</button>
+    <button type="button" class="header-button" onclick="location.href='/UploadReview/'+@reviewerID">Submit New Review</button>
+    <button type="button" class="header-button" onclick="location.href='/MyReviews/'+@reviewerID">My Paper</button>
+    <button type="button" class="header-button" onclick="location.href = '/ReviewerAccount/' +@reviewerID">My Account</button>
 </div>
 
 <div>
     <h3>MyAccount</h3>
 
-   
+
     <div>
         <label for="firstname">Name:</label>
         <input type="text" name="firstname" id="firstname" placeholder="First Name" readonly="@noEdit" @bind="firstName">
@@ -43,18 +43,18 @@
     </div>
     <div>
         <button @onclick="updateAccount">Save</button>
-        <button onclick="location.href='/Author/'+@authorID">Back</button>
+        <button onclick="location.href='/Author/'+@reviewerID">Back</button>
     </div>
     <style>
-        input:read-only{
-            border:none;
+        input:read-only {
+            border: none;
         }
     </style>
 </div>
 
 @code {
     [Parameter]
-    public string authorID { get; set; }
+    public string reviewerID { get; set; }
 
     public string firstName { get; set; }
     public string lastName { get; set; }
@@ -70,29 +70,29 @@
     public string password { get; set; }
     public bool noEdit { get; set; } = false;
 
-    public AuthorModel author = new AuthorModel();
+    public Reviewer reviewer = new Reviewer();
 
     protected override async Task OnInitializedAsync()
     {
-        string sql = "SELECT * FROM Author WHERE AuthorID='" + authorID + "'";
-        author = await _data.LoadOne<AuthorModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
-        firstName = author.FirstName;
-        middleInitial = author.MiddleInitial;
-        lastName = author.LastName;
-        phoneNumber = author.PhoneNumber;
-        emailAddress = author.EmailAddress;
-        address = author.Address;
-        city = author.City;
-        state = author.State;
-        zipCode = author.ZipCode;
-        affiliation = author.Affiliation;
-        department = author.Department;
-        password = author.Password;
+        string sql = "SELECT * FROM Reviewer WHERE ReviewerID='" + reviewerID + "'";
+        reviewer = await _data.LoadOne<Reviewer, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+        firstName = reviewer.FirstName;
+        middleInitial = reviewer.MiddleInitial;
+        lastName = reviewer.LastName;
+        phoneNumber = reviewer.PhoneNumber;
+        emailAddress = reviewer.EmailAddress;
+        address = reviewer.Address;
+        city = reviewer.City;
+        state = reviewer.State;
+        zipCode = reviewer.ZipCode;
+        affiliation = reviewer.Affiliation;
+        department = reviewer.Department;
+        password = reviewer.Password;
     }
 
     public void updateAccount()
     {
-        string sql = "UPDATE Author SET FirstName='"
+        string sql = "UPDATE Reviewer SET FirstName='"
             + firstName + "', MiddleInitial='"
             + middleInitial + "', LastName='"
             + lastName + "', Affiliation='" +
@@ -104,8 +104,8 @@
             zipCode + "', PhoneNumber='" +
             phoneNumber + "', EmailAddress='" +
             emailAddress + "', Password='" +
-            password + "' WHERE AuthorID='" + authorID + "'"; 
-            _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
-        NavigationManager.NavigateTo("authorupdated/"+authorID);
+            password + "' WHERE ReviewerID='" + reviewerID + "'";
+        _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+        NavigationManager.NavigateTo("reviewerupdated/" + reviewerID);
     }
 }
