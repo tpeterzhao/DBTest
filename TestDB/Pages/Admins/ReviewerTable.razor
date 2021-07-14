@@ -62,11 +62,11 @@
 </body>
 </html>
 @code { 
-    private List<Reviewer> currReviewers = new List<Reviewer>();
+    private List<ReviewerModel> currReviewers = new List<ReviewerModel>();
             protected override async Task OnInitializedAsync()
             {
                 string sql = "SELECT ReviewerID, FirstName, MiddleInitial, LastName, Affiliation, Department, Address, City, State, ZipCode, PhoneNumber, EmailAddress, Password FROM Reviewer";
-                currReviewers = await _data.LoadData<Reviewer, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+                currReviewers = await _data.LoadData<ReviewerModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
             }
             private Task deleteReviewer(int reviewerID)
             {

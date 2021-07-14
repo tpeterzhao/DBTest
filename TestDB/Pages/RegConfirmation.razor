@@ -1,4 +1,5 @@
 ﻿@page "/Confirmation"
+@inject NavigationManager NavigationManager
 
 <div>
     <style>
@@ -15,3 +16,14 @@
         <center><b>Thank you!</b></center>
     </div>
 </div>
+
+@code {
+    [Parameter]
+    public string authorID { get; set; }
+    protected async override void OnInitialized()
+    {
+        await Task.Delay(3000);
+        NavigationManager.NavigateTo("/");
+
+    }
+}

@@ -26,12 +26,12 @@
     public string firstName { get; set; }
     public string lastName { get; set; }
 
-    public Reviewer reviewer = new Reviewer();
+    public ReviewerModel reviewer = new ReviewerModel();
 
     protected override async Task OnInitializedAsync()
     {
         string sql = "SELECT * FROM Reviewer WHERE ReviewerID='" + reviewerID + "'";
-        reviewer = await _data.LoadOne<Reviewer, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+        reviewer = await _data.LoadOne<ReviewerModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
         firstName = reviewer.FirstName;
         lastName = reviewer.LastName;
     }

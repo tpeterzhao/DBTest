@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TestDB.Models
 {
-    public class Reviewer
+    public class ReviewerModel
     {
         public int ReviewerID { get; set; }
         public bool Active { get; set; }

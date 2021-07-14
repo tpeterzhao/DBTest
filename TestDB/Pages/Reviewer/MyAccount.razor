@@ -43,7 +43,7 @@
     </div>
     <div>
         <button @onclick="updateAccount">Save</button>
-        <button onclick="location.href='/Author/'+@reviewerID">Back</button>
+        <button onclick="location.href='/Reviewer/'+@reviewerID">Back</button>
     </div>
     <style>
         input:read-only {
@@ -70,12 +70,12 @@
     public string password { get; set; }
     public bool noEdit { get; set; } = false;
 
-    public Reviewer reviewer = new Reviewer();
+    public ReviewerModel reviewer = new ReviewerModel();
 
     protected override async Task OnInitializedAsync()
     {
         string sql = "SELECT * FROM Reviewer WHERE ReviewerID='" + reviewerID + "'";
-        reviewer = await _data.LoadOne<Reviewer, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+        reviewer = await _data.LoadOne<ReviewerModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
         firstName = reviewer.FirstName;
         middleInitial = reviewer.MiddleInitial;
         lastName = reviewer.LastName;

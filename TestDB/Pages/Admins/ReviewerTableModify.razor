@@ -57,11 +57,11 @@
             [Parameter]
             public string userID { get; set; }
             string firstName, middleInitial, lastName, affiliation, department, address, city, state, zipCode, phoneNumber, emailAddress, password;
-            private Reviewer currReviewer = new Reviewer();
+            private ReviewerModel currReviewer = new ReviewerModel();
             protected override async Task OnInitializedAsync()
             {
                 string sql = "SELECT ReviewerID, FirstName, MiddleInitial, LastName, Affiliation, Department, Address, City, State, ZipCode, PhoneNumber, EmailAddress, Password FROM Reviewer WHERE ReviewerID ='" + userID + "'";
-                currReviewer = await _data.LoadOne<Reviewer, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+                currReviewer = await _data.LoadOne<ReviewerModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
             }
             private void saveUnchanged()
             {

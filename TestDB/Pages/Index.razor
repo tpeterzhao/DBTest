@@ -70,10 +70,27 @@
         if (userRole == "reviewer")
         {
             // find user data by username and check password
-            if (/*do the check*/email == "reviewer")
+            List<ReviewerModel> reviewers = new List<ReviewerModel>();
+
+            string sql = "SELECT ReviewerID, Password FROM Reviewer WHERE EmailAddress='" + email + "'";
+            reviewers = await _data.LoadData<ReviewerModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+
+            if (reviewers.Count == 0)
             {
-                var userID = 0; // get userID from database
-                NavigationManager.NavigateTo("Reviewer/" + userID);
+                // if no matching user
+
+                await JS.InvokeAsync<string>("alert", "Wrong username or password!");
+                return;
+            }
+            ReviewerModel reviewer = reviewers.FirstOrDefault();
+            string p = reviewer.Password;
+            int reviewerID = reviewer.ReviewerID;
+
+            // check if password is correct
+            if (/*do the check*/password == p)
+            {
+                // pass authorID as parameter to author page
+                NavigationManager.NavigateTo("Reviewer/" + reviewerID);
             }
         }
 
