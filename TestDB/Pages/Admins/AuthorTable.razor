@@ -12,31 +12,30 @@
     <button type="button" class="header-button" onclick="location.href='/ReviewerTable'">Reviewers</button>
 </div>
 
-<h3>Author Table</h3>
-
 <!DOCTYPE html>
 <html>
 <body>
-
-    <table>
-        <tr>
-            <th>AuthorID</th>
-            <th>First Name</th>
-            <th>M.</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th>Affiliation</th>
-            <th>Department</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>State</th>
-            <th>ZipCode</th>
-            <th>PhoneNumber</th>
-            <th>Edit</th>
-        </tr>
-        @foreach (var user in currAuthors)
-        {
+    <div style="margin:50px;">
+        <h3>Author Table</h3>
+        <table>
+            <tr>
+                <th>AuthorID</th>
+                <th>First Name</th>
+                <th>M.</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Affiliation</th>
+                <th>Department</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>ZipCode</th>
+                <th>PhoneNumber</th>
+                <th>Edit</th>
+            </tr>
+            @foreach (var user in currAuthors)
+            {
     <tr>
         <td>@user.AuthorID</td>
         <td>@user.FirstName</td>
@@ -57,10 +56,9 @@
                 <button type="submit" name="button" @onclick="() => deleteAuthor(user.AuthorID)">Delete</button>
             </form>
         </td>
-    </tr>
-    }
-    </table>
-
+    </tr>}
+        </table>
+    </div>
 </body>
 </html>
 @code { 

@@ -12,39 +12,38 @@
     <button type="button" class="header-button" onclick="location.href='/ReviewerTable'">Reviewers</button>
 </div>
 
-<h3>Review Table</h3>
-
 <!DOCTYPE html>
 <html>
 <body>
-
-    <table>
-        <tr>
-            <th>Review ID</th>
-            <th>Paper ID</th>
-            <th>Reviewer ID</th>
-            <th>Complete</th>
-            <th>Scores</th>
-            <th>Edit</th>
-        </tr>
-        @foreach (var review in currReviews)
-        {
-<tr>
-    <td>@review.ReviewID</td>
-    <td>@review.PaperID</td>
-    <td>@review.ReviewerID</td>
-    <td>@review.Complete</td>
-    <td>
-        <button type="submit" name="button" onclick="location.href='/ReviewScores/' + @review.ReviewID">See Scores</button><br>
-    </td>
-    <td>
-        <form onsubmit="location.href = '/PaperTable'">
-            <button type="submit" name="button" @onclick="() => deleteReview(review.ReviewID)">Delete</button>
-        </form>
-    </td>
-</tr>}
-    </table>
-
+    <div style="margin:50px;">
+        <h3>Review Table</h3>
+        <table>
+            <tr>
+                <th>Review ID</th>
+                <th>Paper ID</th>
+                <th>Reviewer ID</th>
+                <th>Complete</th>
+                <th>Scores</th>
+                <th>Edit</th>
+            </tr>
+            @foreach (var review in currReviews)
+            {
+    <tr>
+        <td>@review.ReviewID</td>
+        <td>@review.PaperID</td>
+        <td>@review.ReviewerID</td>
+        <td>@review.Complete</td>
+        <td>
+            <button type="submit" name="button" onclick="location.href='/ReviewScores/' + @review.ReviewID">See Scores</button><br>
+        </td>
+        <td>
+            <form onsubmit="location.href = '/ReviewTable'">
+                <button type="submit" name="button" @onclick="() => deleteReview(review.ReviewID)">Delete</button>
+            </form>
+        </td>
+    </tr>}
+        </table>
+    </div>
 </body>
 </html>
 @code { 

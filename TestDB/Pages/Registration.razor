@@ -1,4 +1,4 @@
-﻿@page "/Register"
+@page "/Register"
 @using Microsoft.Extensions.Configuration
 @using System.Configuration
 @using DataAccess
@@ -169,11 +169,11 @@
         }
         else
         {
-            string sql = "INSERT INTO Reviewer (FirstName, MiddleInitial, LastName, Affiliation, Department, Address, City, State, ZipCode, PhoneNumber, EmailAddress, Password" +
-                    "AnalysisOfAlgorithms, Applications, Architecture, ArtificialIntelligence, ComputerEngineering, Curriculum, DataStructure, Database, DistancedLearning, DistributedSystems" +
-                    "EthicalSocietalIssues, FirstYearComputing, GenderIssues, GrantWriting, GraphicsImageProcessing, HumanComputerInteraction, LaboratoryEnvironments, Literacy, MathematicsInComputing" +
-                    "Multimedia, NetworkingDataCommunications, NonMajorCourses, ObjectOrientedIssues, OperatingSystems, ParallelProcessing, Pedagogy, ProgrammingLanguage, Research, Security, " +
-                    "SoftwareEngineering, SystemAnalysisAndDesign, UsingTechnologyInTheClassroom, WebAndInternetProgramming, Other, OtherDescription) VALUES (" + "'" + firstName + "', '" + middleInitial + "', '" + lastName 
+            string sql = "INSERT INTO Reviewer (FirstName, MiddleInitial, LastName, Affiliation, Department, Address, City, State, ZipCode, PhoneNumber, EmailAddress, Password, " +
+                    "AnalysisOfAlgorithms, Applications, Architecture, ArtificialIntelligence, ComputerEngineering, Curriculum, DataStructures, Databases, DistancedLearning, DistributedSystems," +
+                    "EthicalSocietalIssues, FirstYearComputing, GenderIssues, GrantWriting, GraphicsImageProcessing, HumanComputerInteraction, LaboratoryEnvironments, Literacy, MathematicsInComputing," +
+                    "Multimedia, NetworkingDataCommunications, NonMajorCourses, ObjectOrientedIssues, OperatingSystems, ParallelProcessing, Pedagogy, ProgrammingLanguages, Research, Security, " +
+                    "SoftwareEngineering, SystemsAnalysisAndDesign, UsingTechnologyInTheClassroom, WebAndInternetProgramming, Other, OtherDescription) VALUES (" + "'" + firstName + "', '" + middleInitial + "', '" + lastName 
                     + "', '" + affiliation + "', '" + department + "', '" + address + "', '" + city + "', '" + state + "', '" + zipCode + "', '" + phoneNumber + "', '" + emailAddress + "', '" + password + "', '" 
                     + AoA + "', '" + application + "', '" + architecture + "', '" + AI + "', '" + CE + "', '" + curriculum + "', '" + DS + "', '" + database + "', '" + DL + "', '" + DSys 
                     + "', '" + ESI + "', '" + FYC + "', '" + GI + "', '" + GI + "', '" + GIP + "', '" + HCI + "', '" + LE + "', '" + literacy + "', '" + MIC + "', '" + multimedia + "', '" 

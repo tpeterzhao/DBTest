@@ -12,45 +12,43 @@
     <button type="button" class="header-button" onclick="location.href='/ReviewerTable'">Reviewers</button>
 </div>
 
-<h3>Paper Table</h3>
-
 <!DOCTYPE html>
 <html>
 <body>
-
-    <table>
-        <tr>
-            <th>Paper ID</th>
-            <th>Original Filename</th>
-            <th>Filename</th>
-            <th>Title</th>
-            <th>Certification</th>
-            <th>Description</th>
-            <th>Topics</th>
-            <th>Edit</th>
-        </tr>
-        @foreach (var paper in currPapers)
-        {
-<tr>
-    <td>@paper.PaperID</td>
-    <td>@paper.FilenameOriginal</td>
-    <td>@paper.Filename</td>
-    <td>@paper.Title</td>
-    <td>@paper.Certification</td>
-    <td>@paper.OtherDescription</td>
-    <td>
-        <button type="submit" name="button" onclick="location.href='/PaperTableTopics/' + @paper.PaperID">Click Here</button><br>
-    </td>
-    <td>
-        <button type="submit" name="button" onclick="location.href='/PaperTableModify/' + @paper.PaperID">Modify</button><br>
-        <form onsubmit="location.href = '/PaperTable'">
-            <button type="submit" name="button" @onclick="() => deleteReviewer(paper.PaperID)">Delete</button>
-        </form>
-    </td>
-</tr>
-}
-    </table>
-
+    <div style="margin:50px;">
+        <h3>Paper Table</h3>
+        <table>
+            <tr>
+                <th>Paper ID</th>
+                <th>Original Filename</th>
+                <th>Filename</th>
+                <th>Title</th>
+                <th>Certification</th>
+                <th>Description</th>
+                <th>Topics</th>
+                <th>Edit</th>
+            </tr>
+            @foreach (var paper in currPapers)
+            {
+    <tr>
+        <td>@paper.PaperID</td>
+        <td>@paper.FilenameOriginal</td>
+        <td>@paper.Filename</td>
+        <td>@paper.Title</td>
+        <td>@paper.Certification</td>
+        <td>@paper.OtherDescription</td>
+        <td>
+            <button type="submit" name="button" onclick="location.href='/PaperTableTopics/' + @paper.PaperID">Click Here</button><br>
+        </td>
+        <td>
+            <button type="submit" name="button" onclick="location.href='/PaperTableModify/' + @paper.PaperID">Modify</button><br>
+            <form onsubmit="location.href = '/PaperTable'">
+                <button type="submit" name="button" @onclick="() => deleteReviewer(paper.PaperID)">Delete</button>
+            </form>
+        </td>
+    </tr>}
+        </table>
+    </div>
 </body>
 </html>
 @code { 
