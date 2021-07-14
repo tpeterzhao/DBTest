@@ -1,5 +1,5 @@
-﻿@page "/AuthorTable"
-@using DataAccess.Model
+@page "/AuthorTable"
+@using Models
 @using DataAccess
 @using Microsoft.Extensions.Configuration
 @inject ISqlAccess _data
@@ -33,31 +33,46 @@
             <th>State</th>
             <th>ZipCode</th>
             <th>PhoneNumber</th>
+            <th>Edit</th>
         </tr>
         @foreach (var user in currAuthors)
         {
-<tr>
-    <td>@user.AuthorID</td>
-    <td>@user.FirstName</td>
-    <td>@user.MiddleInitial</td>
-    <td>@user.LastName</td>
-    <td>@user.EmailAddress</td>
-    <td>@user.Password</td>
-    <td>@user.Affiliation</td>
-    <td>@user.Department</td>
-    <td>@user.Address</td>
-    <td>@user.City</td>
-    <td>@user.State</td>
-    <td>@user.ZipCode</td>
-    <td>@user.PhoneNumber</td>
-</tr>}
+    <tr>
+        <td>@user.AuthorID</td>
+        <td>@user.FirstName</td>
+        <td>@user.MiddleInitial</td>
+        <td>@user.LastName</td>
+        <td>@user.EmailAddress</td>
+        <td>@user.Password</td>
+        <td>@user.Affiliation</td>
+        <td>@user.Department</td>
+        <td>@user.Address</td>
+        <td>@user.City</td>
+        <td>@user.State</td>
+        <td>@user.ZipCode</td>
+        <td>@user.PhoneNumber</td>
+        <td>
+            <button type="submit" name="button" onclick="location.href='/AuthorTableModify/' + @user.AuthorID">Modify</button><br>
+            <form onsubmit="location.href = '/AuthorTable'">
+                <button type="submit" name="button" @onclick="() => deleteAuthor(user.AuthorID)">Delete</button>
+            </form>
+        </td>
+    </tr>
+    }
     </table>
 
 </body>
 </html>
-@code { private List<RegModel> currAuthors = new List<RegModel>();
-            protected override async Task OnInitializedAsync()
-            {
-                string sql = "SELECT AuthorID, FirstName, MiddleInitial, LastName, Affiliation, Department, Address, City, State, ZipCode, PhoneNumber, EmailAddress, Password FROM Author";
-                currAuthors = await _data.LoadData<RegModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
-            } }
+@code { 
+    private List<AuthorModel> currAuthors = new List<AuthorModel>();
+    protected override async Task OnInitializedAsync()
+    {
+        string sql = "SELECT AuthorID, FirstName, MiddleInitial, LastName, Affiliation, Department, Address, City, State, ZipCode, PhoneNumber, EmailAddress, Password FROM Author";
+        currAuthors = await _data.LoadData<AuthorModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+    }
+    private Task deleteAuthor(int authorID)
+    {
+        string sql = "DELETE Author WHERE AuthorID = '" + authorID + "'";
+        return _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+    }
+    }
