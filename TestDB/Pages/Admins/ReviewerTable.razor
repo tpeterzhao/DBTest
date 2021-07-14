@@ -1,5 +1,9 @@
-﻿@page "/ReviewerTable"
-
+@page "/ReviewerTable"
+@using Models
+@using DataAccess
+@using Microsoft.Extensions.Configuration
+@inject ISqlAccess _data
+@inject IConfiguration _config
 <div class="navbar">
     <button type="button" class="header-button" onclick="location.href='/Admin'">Home</button>
     <button type="button" class="header-button" onclick="location.href='/PaperTable'">Papers</button>
@@ -8,8 +12,65 @@
     <button type="button" class="header-button" onclick="location.href='/ReviewerTable'">Reviewers</button>
 </div>
 
-<h3>ReviewerTable</h3>
+<h3>Reviewer Table</h3>
 
-@code {
+<!DOCTYPE html>
+<html>
+<body>
 
-}
+    <table>
+        <tr>
+            <th>ReviewerID</th>
+            <th>First Name</th>
+            <th>M.</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Affiliation</th>
+            <th>Department</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip Code</th>
+            <th>Phone Number</th>
+            <th>Edit</th>
+        </tr>
+        @foreach (var user in currReviewers)
+        {
+<tr>
+    <td>@user.ReviewerID</td>
+    <td>@user.FirstName</td>
+    <td>@user.MiddleInitial</td>
+    <td>@user.LastName</td>
+    <td>@user.EmailAddress</td>
+    <td>@user.Password</td>
+    <td>@user.Affiliation</td>
+    <td>@user.Department</td>
+    <td>@user.Address</td>
+    <td>@user.City</td>
+    <td>@user.State</td>
+    <td>@user.ZipCode</td>
+    <td>@user.PhoneNumber</td>
+    <td>
+        <button type="submit" name="button" onclick="location.href='/ReviewerTableModify/' + @user.ReviewerID">Modify</button><br>
+        <form onsubmit="location.href = '/ReviewerTable'">
+            <button type="submit" name="button" @onclick="() => deleteReviewer(user.ReviewerID)">Delete</button>
+        </form>
+    </td>
+</tr>}
+    </table>
+
+</body>
+</html>
+@code { 
+    private List<Reviewer> currReviewers = new List<Reviewer>();
+            protected override async Task OnInitializedAsync()
+            {
+                string sql = "SELECT ReviewerID, FirstName, MiddleInitial, LastName, Affiliation, Department, Address, City, State, ZipCode, PhoneNumber, EmailAddress, Password FROM Reviewer";
+                currReviewers = await _data.LoadData<Reviewer, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+            }
+            private Task deleteReviewer(int reviewerID)
+            {
+                string sql = "DELETE Reviewer WHERE ReviewerID = '" + reviewerID + "'";
+                return _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+            } }
