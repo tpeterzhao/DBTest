@@ -1,4 +1,4 @@
-﻿@page "/MyReviews/{reviewerID}"
+@page "/MyReviews/{reviewerID}"
 
 @using TestDB.Models
 @using DataAccess
@@ -14,7 +14,6 @@
 </div>
 
 <h3>My Reviews</h3>
-
 <table>
     <tr>
         <th>Review ID</th>
@@ -38,10 +37,10 @@
         <tr>
             <td>@review.ReviewID</td>
             <td>@review.PaperID</td>
-            <td>@review.AOT</td>
-            <td>@review.ToT</td>
-            <td>@review.SE</td>
-            <td>@review.TQ</td>
+            <td>@review.AppropriatenessOfTopic</td>
+            <td>@review.TimelinessOfTopic</td>
+            <td>@review.SupportiveEvidence</td>
+            <td>@review.TechnicalQuality</td>
 
         </tr>
     }
