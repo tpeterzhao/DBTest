@@ -58,4 +58,5 @@
     {
         string sql = "DELETE Review WHERE ReviewID = '" + reviewID + "'";
         return _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
-    } }
+    } 
+}

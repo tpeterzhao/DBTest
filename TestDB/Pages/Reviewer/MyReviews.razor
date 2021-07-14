@@ -18,18 +18,9 @@
     <tr>
         <th>Review ID</th>
         <th>Paper ID</th>
-        <th>Appropriateness Of Topic</th>
-        <th>Timeliness Of Topic</th>
-        <th>Supportive Evidence</th>
-        <th>Technical Quality</th>
-        <th>Scope Of Coverage</th>
-        <th>Citation Of Previous Work</th>
-        <th>Originality</th>
-        <th>Content Comments</th>
-        <th>Organization Of Paper</th>
-
-
-        <th>Topics</th>
+        <th>Reviewer ID</th>
+        <th>Complete</th>
+        <th>Scores</th>
         <th>Edit</th>
     </tr>
     @foreach (var review in reviews)
@@ -37,14 +28,20 @@
         <tr>
             <td>@review.ReviewID</td>
             <td>@review.PaperID</td>
-            <td>@review.AppropriatenessOfTopic</td>
-            <td>@review.TimelinessOfTopic</td>
-            <td>@review.SupportiveEvidence</td>
-            <td>@review.TechnicalQuality</td>
-
+            <td>@review.ReviewerID</td>
+            <td>@review.Complete</td>
+            <td>
+                <button type="submit" name="button" onclick="location.href='/ReviewScores/' + @review.ReviewID">See Scores</button><br>
+            </td>
+            <td>
+                <form onsubmit="location.href = '/PaperTable'">
+                    <button type="submit" name="button" @onclick="() => deleteReview(review.ReviewID)">Delete</button>
+                </form>
+            </td>
         </tr>
-    }
+}
 </table>
+
 @code {
     [Parameter]
     public string reviewerID { get; set; }
@@ -56,5 +53,11 @@
     {
         string sql = "SELECT * FROM Review WHERE ReviewerID='" + reviewerID + "'";
         reviews = await _data.LoadData<Review, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+    }
+
+    private Task deleteReview(int reviewID)
+    {
+        string sql = "DELETE Review WHERE ReviewID = '" + reviewID + "'";
+        return _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
     }
 }

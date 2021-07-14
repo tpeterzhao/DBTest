@@ -27,10 +27,10 @@
             <label>Certification</label><br>
             <input type="text" id="phonenumber" @bind="certification" placeholder="@currPaper.Certification"><br>
             <label>Description</label><br>
-            <input type="text" id="email" @bind="OD" placeholder="@currPaper.OD"><br>
+            <input type="text" id="email" @bind="OD" placeholder="@currPaper.OtherDescription"><br>
         </div>
         <br>
-        <input type="checkbox" value="@currPaper.AoA">
+        <input type="checkbox" value="@currPaper.AnalysisOfAlgorithms">
         <label>Analysis of Algorithms</label><br>
         <input type="checkbox" @bind="Applications" placeholder="@currPaper.Applications">
         <label>Applications</label><br>
@@ -72,7 +72,7 @@
         }
         if (string.IsNullOrEmpty(OD))
         {
-            OD = currPaper.OD;
+            OD = currPaper.OtherDescription;
         }
     }
     private Task updatePaper()
