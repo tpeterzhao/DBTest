@@ -30,10 +30,6 @@
             <input type="text" id="email" @bind="OD" placeholder="@currPaper.OtherDescription"><br>
         </div>
         <br>
-        <input type="checkbox" value="@currPaper.AnalysisOfAlgorithms">
-        <label>Analysis of Algorithms</label><br>
-        <input type="checkbox" @bind="Applications" placeholder="@currPaper.Applications">
-        <label>Applications</label><br>
         <input type="checkbox" @onclick="() => saveUnchanged()">
         <label>Save Unchanged Information.</label><br><br>
         <form onclick="location.href='/PaperTable'">
