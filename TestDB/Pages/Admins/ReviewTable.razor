@@ -1,5 +1,9 @@
-﻿@page "/ReviewTable"
-
+@page "/ReviewTable"
+@using Models
+@using DataAccess
+@using Microsoft.Extensions.Configuration
+@inject ISqlAccess _data
+@inject IConfiguration _config
 <div class="navbar">
     <button type="button" class="header-button" onclick="location.href='/Admin'">Home</button>
     <button type="button" class="header-button" onclick="location.href='/PaperTable'">Papers</button>
@@ -8,8 +12,50 @@
     <button type="button" class="header-button" onclick="location.href='/ReviewerTable'">Reviewers</button>
 </div>
 
-<h3>ReviewTable</h3>
+<h3>Review Table</h3>
 
-@code {
+<!DOCTYPE html>
+<html>
+<body>
 
-}
+    <table>
+        <tr>
+            <th>Review ID</th>
+            <th>Paper ID</th>
+            <th>Reviewer ID</th>
+            <th>Complete</th>
+            <th>Scores</th>
+            <th>Edit</th>
+        </tr>
+        @foreach (var review in currReviews)
+        {
+<tr>
+    <td>@review.ReviewID</td>
+    <td>@review.PaperID</td>
+    <td>@review.ReviewerID</td>
+    <td>@review.Complete</td>
+    <td>
+        <button type="submit" name="button" onclick="location.href='/ReviewScores/' + @review.ReviewID">See Scores</button><br>
+    </td>
+    <td>
+        <form onsubmit="location.href = '/PaperTable'">
+            <button type="submit" name="button" @onclick="() => deleteReview(review.ReviewID)">Delete</button>
+        </form>
+    </td>
+</tr>}
+    </table>
+
+</body>
+</html>
+@code { 
+    private List<Review> currReviews = new List<Review>();
+    protected override async Task OnInitializedAsync()
+    {
+        string sql = "SELECT ReviewID, PaperID, ReviewerID, Complete FROM Review";
+        currReviews = await _data.LoadData<Review, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+    }
+    private Task deleteReview(int reviewID)
+    {
+        string sql = "DELETE Review WHERE ReviewID = '" + reviewID + "'";
+        return _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+    } }
