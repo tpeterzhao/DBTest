@@ -1,5 +1,9 @@
-﻿@page "/PaperTable"
-
+@page "/PaperTable"
+@using Models
+@using DataAccess
+@using Microsoft.Extensions.Configuration
+@inject ISqlAccess _data
+@inject IConfiguration _config
 <div class="navbar">
     <button type="button" class="header-button" onclick="location.href='/Admin'">Home</button>
     <button type="button" class="header-button" onclick="location.href='/PaperTable'">Papers</button>
@@ -8,8 +12,57 @@
     <button type="button" class="header-button" onclick="location.href='/ReviewerTable'">Reviewers</button>
 </div>
 
-<h3>PaperTable</h3>
+<h3>Paper Table</h3>
 
-@code {
+<!DOCTYPE html>
+<html>
+<body>
 
+    <table>
+        <tr>
+            <th>Paper ID</th>
+            <th>Original Filename</th>
+            <th>Filename</th>
+            <th>Title</th>
+            <th>Certification</th>
+            <th>Description</th>
+            <th>Topics</th>
+            <th>Edit</th>
+        </tr>
+        @foreach (var paper in currPapers)
+        {
+<tr>
+    <td>@paper.PaperID</td>
+    <td>@paper.FilenameOriginal</td>
+    <td>@paper.Filename</td>
+    <td>@paper.Title</td>
+    <td>@paper.Certification</td>
+    <td>@paper.OtherDescription</td>
+    <td>
+        <button type="submit" name="button" onclick="location.href='/PaperTableTopics/' + @paper.PaperID">Click Here</button><br>
+    </td>
+    <td>
+        <button type="submit" name="button" onclick="location.href='/PaperTableModify/' + @paper.PaperID">Modify</button><br>
+        <form onsubmit="location.href = '/PaperTable'">
+            <button type="submit" name="button" @onclick="() => deleteReviewer(paper.PaperID)">Delete</button>
+        </form>
+    </td>
+</tr>
+}
+    </table>
+
+</body>
+</html>
+@code { 
+            private List<Paper> currPapers = new List<Paper>();
+            protected override async Task OnInitializedAsync()
+            {
+                string sql = "SELECT PaperID, FilenameOriginal, Filename, Title, Certification, OtherDescription FROM Paper";
+                currPapers = await _data.LoadData<Paper, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+            }
+            private Task deleteReviewer(int paperID)
+            {
+                string sql = "DELETE Paper WHERE PaperID = '" + paperID + "'";
+                return _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+            } 
 }
