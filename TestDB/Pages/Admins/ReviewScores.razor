@@ -1,0 +1,95 @@
+﻿@page "/ReviewScores/{reviewID}"
+@using Models
+@using DataAccess
+@using Microsoft.Extensions.Configuration
+@inject ISqlAccess _data
+@inject IConfiguration _config
+<div style="margin:50px">
+    <h3>Review @reviewID Scores</h3>
+    <table>
+        <tr>
+            <th width="50%">Category</th>
+            <th width="50%">Score</th>
+        </tr>
+        <tr>
+            <td>Appropriateness of Topic</td>
+            <td>@currReview.AppropriatenessOfTopic</td>
+        </tr>
+        <tr>
+            <td>Timeliness of Topic</td>
+            <td>@currReview.TimelinessOfTopic</td>
+        </tr>
+        <tr>
+            <td>Supportive Evidence</td>
+            <td>@currReview.SupportiveEvidence</td>
+        </tr>
+        <tr>
+            <td>Technical Quality</td>
+            <td>@currReview.TechnicalQuality</td>
+        </tr>
+        <tr>
+            <td>Scope of Coverage</td>
+            <td>@currReview.ScopeOfCoverage</td>
+        </tr>
+        <tr>
+            <td>Citation of Previous Work</td>
+            <td>@currReview.CitationOfPreviousWork</td>
+        </tr>
+        <tr>
+            <td>Originality</td>
+            <td>@currReview.Originality</td>
+        </tr>
+        <tr>
+            <td>Organization of Paper</td>
+            <td>@currReview.OrganizationOfPaper</td>
+        </tr>
+        <tr>
+            <td>Clarity of Main Message</td>
+            <td>@currReview.ClarityOfMainMessage</td>
+        </tr>
+        <tr>
+            <td>Mechanics</td>
+            <td>@currReview.Mechanics</td>
+        </tr>
+        <tr>
+            <td>Suitability for Presentation</td>
+            <td>@currReview.SuitabilityForPresentation</td>
+        </tr>
+        <tr>
+            <td>Potential Interest in Topic</td>
+            <td>@currReview.PotentialInterestInTopic</td>
+        </tr>
+        <tr>
+            <td>Overall Rating</td>
+            <td>@currReview.OverallRating</td>
+        </tr>
+        <tr>
+            <td>Comfort Level Topic</td>
+            <td>@currReview.ComfortLevelTopic</td>
+        </tr>
+        <tr>
+            <td>Comfort Level Acceptability</td>
+            <td>@currReview.ComfortLevelAcceptability</td>
+        </tr>
+    </table>
+    <h3>Comments</h3>
+    <label><u>Content Comments</u></label><br>
+    <p>@currReview.ContentComments</p><br>
+    <label><u>Written Document Comments</u></label><br>
+    <p>@currReview.WrittenDocumentComments</p><br>
+    <label><u>Potential for Oral Presentation Comments</u></label><br>
+    <p>@currReview.PotentialForOralPresentationComments</p><br>
+    <label><u>Overall Rating Comments</u></label><br>
+    <p>@currReview.OverallRatingComments</p><br>
+
+</div>
+    @code {
+        [Parameter]
+        public string reviewID { get; set; }
+        private Review currReview = new Review();
+        protected override async Task OnInitializedAsync()
+        {
+            string sql = "SELECT AppropriatenessOfTopic, TimelinessOfTopic, SupportiveEvidence, TechnicalQuality, ScopeOfCoverage, CitationOfPreviousWork, Originality, OrganizationOfPaper, ClarityOfMainMessage, Mechanics, SuitabilityForPresentation, PotentialInterestInTopic, OverallRating, ComfortLevelTopic, ComfortLevelAcceptability, ContentComments, WrittenDocumentComments, PotentialForOralPresentationComments, OverallRatingComments FROM Review WHERE ReviewID = '" + reviewID + "'";
+            currReview = await _data.LoadOne<Review, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+        }
+    }
