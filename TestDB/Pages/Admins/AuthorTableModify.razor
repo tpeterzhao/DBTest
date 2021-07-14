@@ -1,0 +1,123 @@
+﻿@page "/AuthorTableModify/{userID}"
+@using Models
+@using DataAccess
+@using Microsoft.Extensions.Configuration
+@inject ISqlAccess _data
+@inject IConfiguration _config
+<div class="navbar">
+    <button type="button" class="header-button" onclick="location.href='/Admin'">Home</button>
+    <button type="button" class="header-button" onclick="location.href='/PaperTable'">Papers</button>
+    <button type="button" class="header-button" onclick="location.href='/AuthorTable'">Authors</button>
+    <button type="button" class="header-button" onclick="location.href='/ReviewTable'">Reviews</button>
+    <button type="button" class="header-button" onclick="location.href='/ReviewerTable'">Reviewers</button>
+</div>
+
+<!DOCTYPE html>
+<html>
+<body>
+    <div style="margin:50px">
+        <h1>Author Information</h1>
+        <div>
+            <label>First Name</label><br>
+            <input type="text" name="firstname" id="firstname" @bind="firstName" placeholder="@currAuthor.FirstName"><br>
+            <label>Middle Initial</label><br>
+            <input type="text" name="middlename" id="middleInitial" @bind="middleInitial" placeholder="@currAuthor.MiddleInitial"><br>
+            <label>Last Name</label><br>
+            <input type="text" name="lastname" id="lastname" @bind="lastName" placeholder="@currAuthor.LastName"><br>
+            <label>Phone Number</label><br>
+            <input type="text" id="phonenumber" @bind="phoneNumber" placeholder="@currAuthor.PhoneNumber"><br>
+            <label>Email Address</label><br>
+            <input type="text" id="email" @bind="emailAddress" placeholder="@currAuthor.EmailAddress"><br>
+        </div>
+        <div>
+            <label>Street Address</label><br>
+            <input type="text" id="streetaddress" @bind="address" placeholder="@currAuthor.Address"><br>
+            <label>City</label><br>
+            <input type="text" id="city" @bind="city" placeholder="@currAuthor.City"><br>
+            <label>State</label><br>
+            <input type="text" id="state" @bind="state" placeholder="@currAuthor.State"><br>
+            <label>Zip Code</label><br>
+            <input type="text" id="zipcode" @bind="zipCode" placeholder="@currAuthor.ZipCode"><br>
+        </div>
+        <label>Affiliation</label><br>
+        <input type="text" id="affiliation" @bind="affiliation" placeholder="@currAuthor.Affiliation"><br>
+        <label>Department</label><br>
+        <input type="text" id="department" @bind="department" placeholder="@currAuthor.Department"><br>
+        <label>Password</label><br>
+        <input type="text" id="password" @bind="password" placeholder="@currAuthor.Password"><br><br>
+        <input type="checkbox" @onclick="() => saveUnchanged()">
+        <label>Save Unchanged Information.</label><br><br>
+        <form onclick="location.href='/AuthorTable'">
+            <button type="button" @onclick="() => updateAuthor()">Save</button>
+        </form>
+    </div>
+</body>
+</html>
+@code { 
+    [Parameter]
+    public string userID { get; set; }
+    string firstName, middleInitial, lastName, affiliation, department, address, city, state, zipCode, phoneNumber, emailAddress, password;
+    private AuthorModel currAuthor = new AuthorModel();
+    protected override async Task OnInitializedAsync()
+    {
+        string sql = "SELECT AuthorID, FirstName, MiddleInitial, LastName, Affiliation, Department, Address, City, State, ZipCode, PhoneNumber, EmailAddress, Password FROM Author WHERE AuthorID ='" + userID + "'";
+        currAuthor = await _data.LoadOne<AuthorModel, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+    }
+    private void saveUnchanged()
+    {
+        if (string.IsNullOrEmpty(firstName))
+        {
+            firstName = currAuthor.FirstName;
+        }
+        if (string.IsNullOrEmpty(middleInitial))
+        {
+            middleInitial = currAuthor.MiddleInitial;
+        }
+        if (string.IsNullOrEmpty(lastName))
+        {
+            lastName = currAuthor.LastName;
+        }
+        if (string.IsNullOrEmpty(affiliation))
+        {
+            affiliation = currAuthor.Affiliation;
+        }
+        if (string.IsNullOrEmpty(department))
+        {
+            department = currAuthor.Department;
+        }
+        if (string.IsNullOrEmpty(address))
+        {
+            address = currAuthor.Address;
+        }
+        if (string.IsNullOrEmpty(city))
+        {
+            city = currAuthor.City;
+        }
+        if (string.IsNullOrEmpty(state))
+        {
+            state = currAuthor.State;
+        }
+        if (string.IsNullOrEmpty(zipCode))
+        {
+            zipCode = currAuthor.ZipCode;
+        }
+        if (string.IsNullOrEmpty(phoneNumber))
+        {
+            phoneNumber = currAuthor.PhoneNumber;
+        }
+        if (string.IsNullOrEmpty(emailAddress))
+        {
+            emailAddress = currAuthor.EmailAddress;
+        }
+        if (string.IsNullOrEmpty(password))
+        {
+            password = currAuthor.Password;
+        }
+    }
+    private Task updateAuthor()
+    {
+
+        string sql = "UPDATE Author SET FirstName ='" + firstName + "', LastName ='" + lastName + "', MiddleInitial='" + middleInitial + "', Affiliation='" + affiliation + "', Department='" + department + "', Address='" + address + "', City='" + city + "', State='" + state + "', ZipCode='" + zipCode + "', PhoneNumber='" + phoneNumber + "', EmailAddress='" + emailAddress + "', Password='" + password + "' WHERE AuthorID ='" + userID + "'";
+        return _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+    }
+ }

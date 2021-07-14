@@ -1,0 +1,157 @@
+﻿@page "/PaperTableTopics/{paperID}"
+@using Models
+@using DataAccess
+@using Microsoft.Extensions.Configuration
+@inject ISqlAccess _data
+@inject IConfiguration _config
+<div style="margin:50px">
+    <h3>Paper @paperID Topics</h3>
+    @if (currPaper.AnalysisOfAlgorithms == true)
+    {
+        <p>Analysis Of Algorithms</p>
+    }
+    @if (currPaper.Applications == true)
+    {
+        <p>Applications</p>
+    }
+    @if (currPaper.Architecture == true)
+    {
+        <p>Architecture</p>
+    }
+    @if (currPaper.ArtificialIntelligence == true)
+    {
+        <p>Artificial Intelligence</p>
+    }
+    @if (currPaper.ComputerEngineering == true)
+    {
+        <p>Computer Engineering</p>
+    }
+    @if (currPaper.Curriculum == true)
+    {
+        <p>Curriculum</p>
+    }
+    @if (currPaper.DataStructures == true)
+    {
+        <p>DataStructures</p>
+    }
+    @if (currPaper.Databases == true)
+    {
+        <p>Databases</p>
+    }
+    @if (currPaper.DistanceLearning == true)
+    {
+        <p>Distance Learning</p>
+    }
+    @if (currPaper.DistributedSystems == true)
+    {
+        <p>Distributed Systems</p>
+    }
+    @if (currPaper.EthicalSocietalIssues == true)
+    {
+        <p>Ethical Societal Issues</p>
+    }
+    @if (currPaper.FirstYearComputing == true)
+    {
+        <p>First Year Computing</p>
+    }
+    @if (currPaper.GenderIssues == true)
+    {
+        <p>Gender Issues</p>
+    }
+    @if (currPaper.GrantWriting == true)
+    {
+        <p>Grant Writing</p>
+    }
+    @if (currPaper.GraphicsImageProcessing == true)
+    {
+        <p>GraphicsImageProcessing</p>
+    }
+    @if (currPaper.HumanComputerInteraction == true)
+    {
+        <p>Human Computer Interaction</p>
+    }
+    @if (currPaper.LaboratoryEnvironments == true)
+    {
+        <p>LaboratoryEnvironments</p>
+    }
+    @if (currPaper.Literacy == true)
+    {
+        <p>Literacy</p>
+    }
+    @if (currPaper.MathematicsInComputing == true)
+    {
+        <p>Mathematics In Computing</p>
+    }
+    @if (currPaper.Multimedia == true)
+    {
+        <p>Multimedia</p>
+    }
+    @if (currPaper.NetworkingDataCommunications == true)
+    {
+        <p>Networking Data Communications</p>
+    }
+    @if (currPaper.NonMajorCourses == true)
+    {
+        <p>Non Major Courses</p>
+    }
+    @if (currPaper.ObjectOrientedIssues == true)
+    {
+        <p>ObjectOrientedIssues</p>
+    }
+    @if (currPaper.OperatingSystems == true)
+    {
+        <p>Operating Systems</p>
+    }
+    @if (currPaper.ParallelsProcessing == true)
+    {
+        <p>Parallel Processing</p>
+    }
+    @if (currPaper.Pedagogy == true)
+    {
+        <p>Pedagogy</p>
+    }
+    @if (currPaper.ProgrammingLanguages == true)
+    {
+        <p>Programming Languages</p>
+    }
+    @if (currPaper.Research == true)
+    {
+        <p>Research</p>
+    }
+    @if (currPaper.Security == true)
+    {
+        <p>Security</p>
+    }
+    @if (currPaper.SoftwareEngineering == true)
+    {
+        <p>Software Engineering</p>
+    }
+    @if (currPaper.SystemsAnalysisAndDesign == true)
+    {
+        <p>Systems Analysis And Design</p>
+    }
+    @if (currPaper.UsingTechnologyInTheClassroom == true)
+    {
+        <p>Using Technology In The Classroom</p>
+    }
+    @if (currPaper.WebAndInternetProgramming == true)
+    {
+        <p>Web And Internet Programming</p>
+    }
+    @if (currPaper.Other == true)
+    {
+        <p>Other</p>
+    }
+    <button type="button" onclick="location.href='/PaperTableModify/' + @paperID">Edit</button>
+</div>
+@code {
+    [Parameter]
+    public string paperID { get; set; }
+    string filenameOriginal, filename, title, certification, OD;
+    private Paper currPaper = new Paper();
+    protected override async Task OnInitializedAsync()
+    {
+        string sql = "SELECT PaperID, AnalysisOfAlgorithms, Applications, Architecture, ArtificialIntelligence, ComputerEngineering, Curriculum, DataStructures, Databases, DistanceLearning, DistributedSystems, EthicalSocietalIssues, FirstYearComputing, GenderIssues, GrantWriting, GraphicsImageProcessing, HumanComputerInteraction, LaboratoryEnvironments, Literacy, MathematicsInComputing, Multimedia, NetworkingDataCommunications, NonMajorCourses, ObjectOrientedIssues, OperatingSystems, ParallelsProcessing, Pedagogy, ProgrammingLanguages, Research, Security, SoftwareEngineering, SystemsAnalysisAndDesign, UsingTechnologyInTheClassroom, WebAndInternetProgramming, Other FROM Paper WHERE PaperID = '" + paperID + "'";
+        currPaper = await _data.LoadOne<Paper, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+    }
+}

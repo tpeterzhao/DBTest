@@ -1,0 +1,123 @@
+﻿@page "/ReviewerTableModify/{userID}"
+@using Models
+@using DataAccess
+@using Microsoft.Extensions.Configuration
+@inject ISqlAccess _data
+@inject IConfiguration _config
+<div class="navbar">
+    <button type="button" class="header-button" onclick="location.href='/Admin'">Home</button>
+    <button type="button" class="header-button" onclick="location.href='/PaperTable'">Papers</button>
+    <button type="button" class="header-button" onclick="location.href='/AuthorTable'">Authors</button>
+    <button type="button" class="header-button" onclick="location.href='/ReviewTable'">Reviews</button>
+    <button type="button" class="header-button" onclick="location.href='/ReviewerTable'">Reviewers</button>
+</div>
+
+<!DOCTYPE html>
+<html>
+<body>
+    <div style="margin:50px">
+        <h1>Reviewer Information</h1>
+        <div>
+            <label>First Name</label><br>
+            <input type="text" name="firstname" id="firstname" @bind="firstName" placeholder="@currReviewer.FirstName"><br>
+            <label>Middle Initial</label><br>
+            <input type="text" name="middlename" id="middleInitial" @bind="middleInitial" placeholder="@currReviewer.MiddleInitial"><br>
+            <label>Last Name</label><br>
+            <input type="text" name="lastname" id="lastname" @bind="lastName" placeholder="@currReviewer.LastName"><br>
+            <label>Phone Number</label><br>
+            <input type="text" id="phonenumber" @bind="phoneNumber" placeholder="@currReviewer.PhoneNumber"><br>
+            <label>Email Address</label><br>
+            <input type="text" id="email" @bind="emailAddress" placeholder="@currReviewer.EmailAddress"><br>
+        </div>
+        <div>
+            <label>Street Address</label><br>
+            <input type="text" id="streetaddress" @bind="address" placeholder="@currReviewer.Address"><br>
+            <label>City</label><br>
+            <input type="text" id="city" @bind="city" placeholder="@currReviewer.City"><br>
+            <label>State</label><br>
+            <input type="text" id="state" @bind="state" placeholder="@currReviewer.State"><br>
+            <label>Zip Code</label><br>
+            <input type="text" id="zipcode" @bind="zipCode" placeholder="@currReviewer.ZipCode"><br>
+        </div>
+        <label>Affiliation</label><br>
+        <input type="text" id="affiliation" @bind="affiliation" placeholder="@currReviewer.Affiliation"><br>
+        <label>Department</label><br>
+        <input type="text" id="department" @bind="department" placeholder="@currReviewer.Department"><br>
+        <label>Password</label><br>
+        <input type="text" id="password" @bind="password" placeholder="@currReviewer.Password"><br><br>
+        <input type="checkbox" @onclick="() => saveUnchanged()">
+        <label>Save Unchanged Information.</label><br><br>
+        <form onclick="location.href='/ReviewerTable'">
+            <button type="button" @onclick="() => updateReviewer()">Save</button>
+        </form>
+    </div>
+</body>
+</html>
+@code { 
+            [Parameter]
+            public string userID { get; set; }
+            string firstName, middleInitial, lastName, affiliation, department, address, city, state, zipCode, phoneNumber, emailAddress, password;
+            private Reviewer currReviewer = new Reviewer();
+            protected override async Task OnInitializedAsync()
+            {
+                string sql = "SELECT ReviewerID, FirstName, MiddleInitial, LastName, Affiliation, Department, Address, City, State, ZipCode, PhoneNumber, EmailAddress, Password FROM Reviewer WHERE ReviewerID ='" + userID + "'";
+                currReviewer = await _data.LoadOne<Reviewer, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+            }
+            private void saveUnchanged()
+            {
+                if (string.IsNullOrEmpty(firstName))
+                {
+                    firstName = currReviewer.FirstName;
+                }
+                if (string.IsNullOrEmpty(middleInitial))
+                {
+                    middleInitial = currReviewer.MiddleInitial;
+                }
+                if (string.IsNullOrEmpty(lastName))
+                {
+                    lastName = currReviewer.LastName;
+                }
+                if (string.IsNullOrEmpty(affiliation))
+                {
+                    affiliation = currReviewer.Affiliation;
+                }
+                if (string.IsNullOrEmpty(department))
+                {
+                    department = currReviewer.Department;
+                }
+                if (string.IsNullOrEmpty(address))
+                {
+                    address = currReviewer.Address;
+                }
+                if (string.IsNullOrEmpty(city))
+                {
+                    city = currReviewer.City;
+                }
+                if (string.IsNullOrEmpty(state))
+                {
+                    state = currReviewer.State;
+                }
+                if (string.IsNullOrEmpty(zipCode))
+                {
+                    zipCode = currReviewer.ZipCode;
+                }
+                if (string.IsNullOrEmpty(phoneNumber))
+                {
+                    phoneNumber = currReviewer.PhoneNumber;
+                }
+                if (string.IsNullOrEmpty(emailAddress))
+                {
+                    emailAddress = currReviewer.EmailAddress;
+                }
+                if (string.IsNullOrEmpty(password))
+                {
+                    password = currReviewer.Password;
+                }
+            }
+            private Task updateReviewer()
+            {
+
+                string sql = "UPDATE Reviewer SET FirstName ='" + firstName + "', LastName ='" + lastName + "', MiddleInitial='" + middleInitial + "', Affiliation='" + affiliation + "', Department='" + department + "', Address='" + address + "', City='" + city + "', State='" + state + "', ZipCode='" + zipCode + "', PhoneNumber='" + phoneNumber + "', EmailAddress='" + emailAddress + "', Password='" + password + "' WHERE ReviewerID ='" + userID + "'";
+                return _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+            }
+}

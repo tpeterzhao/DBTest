@@ -1,0 +1,83 @@
+﻿@page "/PaperTableModify/{paperID}"
+@using Models
+@using DataAccess
+@using Microsoft.Extensions.Configuration
+@inject ISqlAccess _data
+@inject IConfiguration _config
+<div class="navbar">
+    <button type="button" class="header-button" onclick="location.href='/Admin'">Home</button>
+    <button type="button" class="header-button" onclick="location.href='/PaperTable'">Papers</button>
+    <button type="button" class="header-button" onclick="location.href='/AuthorTable'">Authors</button>
+    <button type="button" class="header-button" onclick="location.href='/ReviewTable'">Reviews</button>
+    <button type="button" class="header-button" onclick="location.href='/ReviewerTable'">Reviewers</button>
+</div>
+
+<!DOCTYPE html>
+<html>
+<body>
+    <div style="margin:50px">
+        <h1>Paper Information</h1>
+        <div>
+            <label>Original Filename</label><br>
+            <input type="text" name="firstname" id="firstname" @bind="filenameOriginal" placeholder="@currPaper.FilenameOriginal"><br>
+            <label>Filename</label><br>
+            <input type="text" name="middlename" id="middleInitial" @bind="filename" placeholder="@currPaper.Filename"><br>
+            <label>Title</label><br>
+            <input type="text" name="lastname" id="lastname" @bind="title" placeholder="@currPaper.Title"><br>
+            <label>Certification</label><br>
+            <input type="text" id="phonenumber" @bind="certification" placeholder="@currPaper.Certification"><br>
+            <label>Description</label><br>
+            <input type="text" id="email" @bind="OD" placeholder="@currPaper.OtherDescription"><br>
+        </div>
+        <br>
+        <input type="checkbox" value="@currPaper.AnalysisOfAlgorithms">
+        <label>Analysis of Algorithms</label><br>
+        <input type="checkbox" @bind="Applications" placeholder="@currPaper.Applications">
+        <label>Applications</label><br>
+        <input type="checkbox" @onclick="() => saveUnchanged()">
+        <label>Save Unchanged Information.</label><br><br>
+        <form onclick="location.href='/PaperTable'">
+            <button type="button" @onclick="() => updatePaper()">Save</button>
+        </form>
+    </div>
+</body>
+</html>
+@code { [Parameter]
+    public string paperID { get; set; }
+    bool AnalysisOfAlgorithms, Applications;
+    string filenameOriginal, filename, title, certification, OD;
+    private Paper currPaper = new Paper();
+    protected override async Task OnInitializedAsync()
+    {
+        string sql = "SELECT PaperID, FilenameOriginal, Filename, Title, Certification, OtherDescription FROM Paper WHERE PaperID ='" + paperID + "'";
+        currPaper = await _data.LoadOne<Paper, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+    }
+    private void saveUnchanged()
+    {
+        if (string.IsNullOrEmpty(filenameOriginal))
+        {
+            filenameOriginal = currPaper.FilenameOriginal;
+        }
+        if (string.IsNullOrEmpty(filename))
+        {
+            filename = currPaper.Filename;
+        }
+        if (string.IsNullOrEmpty(title))
+        {
+            title = currPaper.Title;
+        }
+        if (string.IsNullOrEmpty(certification))
+        {
+            certification = currPaper.Certification;
+        }
+        if (string.IsNullOrEmpty(OD))
+        {
+            OD = currPaper.OtherDescription;
+        }
+    }
+    private Task updatePaper()
+    {
+
+        string sql = "UPDATE Paper SET FilenameOriginal ='" + filenameOriginal + "', Filename ='" + filename + "', Title='" + title + "', Certification='" + certification + "', OtherDescription='" + OD + "' WHERE PaperID ='" + paperID + "'";
+        return _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+    } }
