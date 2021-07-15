@@ -12,7 +12,7 @@
     <h1 class="content-item">UploadPaper</h1>
 
     <h3 class="content-item">Paper Submission Form:</h3>
-    <form action="submitpaper()">
+    <form action="submitpaper()" enctype="multipart/form-data" method="post">
 
         <label for="AuthorID" class="content-item">AuthorID: @authorID</label><br />
         <label for="Paper Title" class="content-item">Title: </label>
@@ -112,6 +112,7 @@
 
 
 </div>
+
 
 @code {
     [Parameter]
