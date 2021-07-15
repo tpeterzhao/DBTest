@@ -17,7 +17,7 @@
 <h1>UploatReview</h1>
 
 <h3>Review Submission Form:</h3>
-<form action="/action_page.php" class="content">
+<form class="content">
     <div class="content-item">
         <label for="ReviewerID">ReviewerID: </label>
         <input type="text" id="ReviewerID" name="ReviewerID" value="@reviewerID" readonly>
@@ -101,7 +101,7 @@
         <input type="number" id="ComfortLevelAcceptability" name="ComfortLevelAcceptability" step="0.01" min="0" max="100" @bind="CLA"><br />
     </div>
 
-    <input type="submit">
+    <input type="submit" @onclick="addReview">
 
     <button onclick="location.href='/Reviewer/'+@reviewerID">Back</button>
 
@@ -119,6 +119,6 @@
     {
         string sql = "INSERT INTO Review (ReviewerID, PaperID, AppropriatenessOfTopic, TimelinessOfTopic, SupportiveEvidence, TechnicalQuality, ScopeOfCoverage, CitationOfPreviousWork, Originality, OrganizationOfPaper, ClarityOfMainMessage, Mechanics, SuitabilityForPresentation, PotentialInterestInTopic, OverallRating, ComfortLevelTopic, ComfortLevelAcceptability, ContentComments, WrittenDocumentComments, PotentialForOralPresentationComments, OverallRatingComments)" +
                 "VALUES (" + reviewerID + "', '" + paperID + "', '" + AOT + "', '" + TOT + "', '" + SE + "', '" + TQ + "', '" + SOC + "', '" + COPW + "', '" + originality + "', '" + OOP + "', '" + COMM + "', '" + mechanics + "', '" + SFP + "', '" + PIIT + "', '" + overall + "', '" + CLT + "', '" + CLA + "', '" + CC + "', '" + WDC + "', '" + PFOPC + "', '" + OC +"')";
-        return _data.LoadOne<Review, dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+        return _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
     }
 }

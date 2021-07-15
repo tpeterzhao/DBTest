@@ -6,6 +6,7 @@
 @using DataAccess.Model
 @inject ISqlAccess _data
 @inject IConfiguration _config
+@inject NavigationManager NavigationManager
 
 <div class="content">
     <h1>Registration</h1>
@@ -59,7 +60,7 @@
             <input type="checkbox" name="database" @bind="database" />
             <label for="database">Database</label>
             <input type="checkbox" name="DL" @bind="DL" />
-            <label for="DL">Distanced Learning</label>            
+            <label for="DL">Distanced Learning</label>
             <input type="checkbox" name="DSys" @bind="DSys">
             <label for="DSys">Distributed Systems</label>
 
@@ -173,12 +174,12 @@
                     "AnalysisOfAlgorithms, Applications, Architecture, ArtificialIntelligence, ComputerEngineering, Curriculum, DataStructures, Databases, DistancedLearning, DistributedSystems," +
                     "EthicalSocietalIssues, FirstYearComputing, GenderIssues, GrantWriting, GraphicsImageProcessing, HumanComputerInteraction, LaboratoryEnvironments, Literacy, MathematicsInComputing," +
                     "Multimedia, NetworkingDataCommunications, NonMajorCourses, ObjectOrientedIssues, OperatingSystems, ParallelProcessing, Pedagogy, ProgrammingLanguages, Research, Security, " +
-                    "SoftwareEngineering, SystemsAnalysisAndDesign, UsingTechnologyInTheClassroom, WebAndInternetProgramming, Other, OtherDescription) VALUES (" + "'" + firstName + "', '" + middleInitial + "', '" + lastName 
-                    + "', '" + affiliation + "', '" + department + "', '" + address + "', '" + city + "', '" + state + "', '" + zipCode + "', '" + phoneNumber + "', '" + emailAddress + "', '" + password + "', '" 
-                    + AoA + "', '" + application + "', '" + architecture + "', '" + AI + "', '" + CE + "', '" + curriculum + "', '" + DS + "', '" + database + "', '" + DL + "', '" + DSys 
-                    + "', '" + ESI + "', '" + FYC + "', '" + GI + "', '" + GI + "', '" + GIP + "', '" + HCI + "', '" + LE + "', '" + literacy + "', '" + MIC + "', '" + multimedia + "', '" 
-                    + NDC + "', '" + NMC + "', '" + OOI + "', '" + OS + "', '" + PP + "', '" + pedagogy + "', '" + PL + "', '" + research + "', '" + security + "', '" + SE + "', '" + SAAD + "', '" + UTITC + "', '" 
-                    + WAIP + "', '" + other + "', '"  + otherDescription + "')";
+                    "SoftwareEngineering, SystemsAnalysisAndDesign, UsingTechnologyInTheClassroom, WebAndInternetProgramming, Other, OtherDescription) VALUES (" + "'" + firstName + "', '" + middleInitial + "', '" + lastName
+                    + "', '" + affiliation + "', '" + department + "', '" + address + "', '" + city + "', '" + state + "', '" + zipCode + "', '" + phoneNumber + "', '" + emailAddress + "', '" + password + "', '"
+                    + AoA + "', '" + application + "', '" + architecture + "', '" + AI + "', '" + CE + "', '" + curriculum + "', '" + DS + "', '" + database + "', '" + DL + "', '" + DSys
+                    + "', '" + ESI + "', '" + FYC + "', '" + GI + "', '" + GI + "', '" + GIP + "', '" + HCI + "', '" + LE + "', '" + literacy + "', '" + MIC + "', '" + multimedia + "', '"
+                    + NDC + "', '" + NMC + "', '" + OOI + "', '" + OS + "', '" + PP + "', '" + pedagogy + "', '" + PL + "', '" + research + "', '" + security + "', '" + SE + "', '" + SAAD + "', '" + UTITC + "', '"
+                    + WAIP + "', '" + other + "', '" + otherDescription + "')";
             return _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
         }
     }

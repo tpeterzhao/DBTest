@@ -1,5 +1,9 @@
 ﻿@page "/UploadPaper/{authorID}"
-
+@using Models
+@using DataAccess
+@using Microsoft.Extensions.Configuration
+@inject ISqlAccess _data
+@inject IConfiguration _config
 <div class="navbar">
     <button type="button" class="header-button" onclick="location.href='/Author/'+@authorID">Home</button>
     <button type="button" class="header-button" onclick="location.href='/UploadPaper/'+@authorID">Submit New Paper</button>
@@ -8,116 +12,119 @@
 </div>
 
 <div class="content">
-    
+
     <h1 class="content-item">UploadPaper</h1>
 
     <h3 class="content-item">Paper Submission Form:</h3>
-    <form action="submitpaper()" enctype="multipart/form-data" method="post">
 
-        <label for="AuthorID" class="content-item">AuthorID: @authorID</label><br />
-        <label for="Paper Title" class="content-item">Title: </label>
-        <input type="text" id="Title" name="Title">
+    <label for="AuthorID" class="content-item">AuthorID: @authorID</label><br />
+    <label for="Paper Title" class="content-item">Title: </label>
+    <input type="text" id="Title" name="Title" @bind="Title" style="width: 50%">
 
-        <h4>Topics:</h4><br />
-        <div class="content-item">
-            <label for="AnalysisofAlgorithms">Analaysis of Algorithms: </label>
-            <input type="checkbox">
-            <label for="Applications">Appilications: </label>
-            <input type="checkbox">
-            <label for="Architecture">Architecture: </label>
-            <input type="checkbox">
-            <label for="ArtificialIntelligence">Artificial Intelligence: </label>
-            <input type="checkbox">
-            <label for="ComputerEngineering">Computer Engineering: </label>
-            <input type="checkbox">
-        </div>
-        <div class="content-item">
-            <label for="Curriculum">Curriculum: </label>
-            <input type="checkbox">
-            <label for="Data Structures">Data Structures: </label>
-            <input type="checkbox">
-            <label for="Databases">Databases: </label>
-            <input type="checkbox">
-            <label for="DistanceLearning">Distance Learning: </label>
-            <input type="checkbox">
-            <label for="DistributedSystems">Distributed Systems: </label>
-            <input type="checkbox">
-        </div>
-        <div class="content-item">
-            <label for="EthicalSocietalIssues">Ethical Societal Issues: </label>
-            <input type="checkbox">
-            <label for="FirstYearComputing">First Year Computing: </label>
-            <input type="checkbox">
-            <label for="GenderIssues">Gender Issues: </label>
-            <input type="checkbox">
-            <label for="GrantWriting">Grant Writing: </label>
-            <input type="checkbox">
-            <label for="GraphicsImageProcessing">Graphics Image Processing: </label>
-            <input type="checkbox">
-        </div>
-        <div class="content-item">
-            <label for="HumanComputerInteraction">Human Computer Interaction: </label>
-            <input type="checkbox">
-            <label for="LaboratoryEnvironments">Laboratory Environments: </label>
-            <input type="checkbox">
-            <label for="Literacy">Literacy: </label>
-            <input type="checkbox">
-            <label for="MathematicsComputing">Mathematics Computing: </label>
-            <input type="checkbox">
-            <label for="Multimedia">Multimedia: </label>
-            <input type="checkbox">
-        </div>
-        <div class="content-item">
-            <label for="NetworkingDataComminications">Networking Data Communications: </label>
-            <input type="checkbox">
-            <label for="NonMajorCourses">Non-Major Courses: </label>
-            <input type="checkbox">
-            <label for="ObjectOrientedIssues">Object Oriented Issues: </label>
-            <input type="checkbox">
-            <label for="OperatingSystems">Operating Systems: </label>
-            <input type="checkbox">
-            <label for="ParallelProcessing">Parallel Processing: </label>
-            <input type="checkbox">
-        </div>
-        <div class="content-item">
-            <label for="Pedagogy">Pedagogy: </label>
-            <input type="checkbox">
-            <label for="ProgrammingLanguages">Programming Languages: </label>
-            <input type="checkbox">
-            <label for="Research">Research: </label>
-            <input type="checkbox">
-            <label for="Security">Secutiry: </label>
-            <input type="checkbox">
-            <label for="SoftwareEngineering">Software Engineering: </label>
-            <input type="checkbox">
-        </div>
-        <div class="content-item">
-            <label for="SystemsAnalysisAndDesign">Systems Analysis and Design: </label>
-            <input type="checkbox">
-            <label for="UsingTechnologyInTheClassroom">Using Technology In The Classroom: </label>
-            <input type="checkbox">
-            <label for="Other">Other: </label>
-            <input type="checkbox"> 
-            <label for="App">Other Description: </label>
-            <textarea id="OtherDesc" name="OtherDesc" rows="5" cols="75"></textarea>
-        </div>
-        <div class="content-item">
-            <input type="file" id="myFile" name="filename"><br />
-            <input type="submit">
-            <button type="button" onclick="location.href='/Author/'+@authorID">Cancel</button>
-            <!-- <input type="submit" value="Submit"> -->
-        </div>
+    <h4>Topics:</h4><br />
+    <div class="content-item">
+        <label for="AnalysisofAlgorithms">Analaysis of Algorithms: </label>
+        <input type="checkbox" @bind="AnalysisOfAlgorithms">
+        <label for="Applications">Applications: </label>
+        <input type="checkbox" @bind="Applications">
+        <label for="Architecture">Architecture: </label>
+        <input type="checkbox" @bind="Architecture">
+        <label for="ArtificialIntelligence">Artificial Intelligence: </label>
+        <input type="checkbox" @bind="ArtificialIntelligence">
+        <label for="ComputerEngineering">Computer Engineering: </label>
+        <input type="checkbox" @bind="ComputerEngineering">
+    </div>
+    <div class="content-item">
+        <label for="Curriculum">Curriculum: </label>
+        <input type="checkbox" @bind="Curriculum">
+        <label for="Data Structures">Data Structures: </label>
+        <input type="checkbox" @bind="DataStructures">
+        <label for="Databases">Databases: </label>
+        <input type="checkbox" @bind="Databases">
+        <label for="DistanceLearning">Distance Learning: </label>
+        <input type="checkbox" @bind="DistanceLearning">
+        <label for="DistributedSystems">Distributed Systems: </label>
+        <input type="checkbox" @bind="DistributedSystems">
+    </div>
+    <div class="content-item">
+        <label for="EthicalSocietalIssues">Ethical Societal Issues: </label>
+        <input type="checkbox" @bind="EthicalSocietalIssues">
+        <label for="FirstYearComputing">First Year Computing: </label>
+        <input type="checkbox" @bind="FirstYearComputing">
+        <label for="GenderIssues">Gender Issues: </label>
+        <input type="checkbox" @bind="GenderIssues">
+        <label for="GrantWriting">Grant Writing: </label>
+        <input type="checkbox" @bind="GrantWriting">
+        <label for="GraphicsImageProcessing">Graphics Image Processing: </label>
+        <input type="checkbox" @bind="GraphicsImageProcessing">
+    </div>
+    <div class="content-item">
+        <label for="HumanComputerInteraction">Human Computer Interaction: </label>
+        <input type="checkbox" @bind="HumanComputerInteraction">
+        <label for="LaboratoryEnvironments">Laboratory Environments: </label>
+        <input type="checkbox" @bind="LaboratoryEnvironments">
+        <label for="Literacy">Literacy: </label>
+        <input type="checkbox" @bind="Literacy">
+        <label for="MathematicsComputing">Mathematics Computing: </label>
+        <input type="checkbox" @bind="MathematicsInComputing">
+        <label for="Multimedia">Multimedia: </label>
+        <input type="checkbox" @bind="Multimedia">
+    </div>
+    <div class="content-item">
+        <label for="NetworkingDataComminications">Networking Data Communications: </label>
+        <input type="checkbox" @bind="NetworkingDataCommunications">
+        <label for="NonMajorCourses">Non-Major Courses: </label>
+        <input type="checkbox" @bind="NonMajorCourses">
+        <label for="ObjectOrientedIssues">Object Oriented Issues: </label>
+        <input type="checkbox" @bind="ObjectOrientedIssues">
+        <label for="OperatingSystems">Operating Systems: </label>
+        <input type="checkbox" @bind="OperatingSystems">
+        <label for="ParallelProcessing">Parallel Processing: </label>
+        <input type="checkbox" @bind="ParallelsProcessing">
+    </div>
+    <div class="content-item">
+        <label for="Pedagogy">Pedagogy: </label>
+        <input type="checkbox" @bind="Pedagogy">
+        <label for="ProgrammingLanguages">Programming Languages: </label>
+        <input type="checkbox" @bind="ProgrammingLanguages">
+        <label for="Research">Research: </label>
+        <input type="checkbox" @bind="Research">
+        <label for="Security">Secutiry: </label>
+        <input type="checkbox" @bind="Security">
+        <label for="SoftwareEngineering">Software Engineering: </label>
+        <input type="checkbox" @bind="SoftwareEngineering">
+    </div>
+    <div class="content-item">
+        <label for="SystemsAnalysisAndDesign">Systems Analysis and Design: </label>
+        <input type="checkbox" @bind="SystemsAnalysisAndDesign">
+        <label for="UsingTechnologyInTheClassroom">Using Technology In The Classroom: </label>
+        <input type="checkbox" @bind="UsingTechnologyInTheClassroom">
+        <label for="Other">Other: </label>
+        <input type="checkbox" @bind="Other"><br>
+        <label for="App">Other Description: </label>
+        <textarea id="OtherDesc" name="OtherDesc" rows="5" cols="75" @bind="OtherDescription"></textarea>
+    </div>
+    <div class="content-item">
+        <input type="file" id="myFile" name="filename" @bind="Filename"><br />
+        <form onsubmit="location.href='/MyPapers/'+@authorID">
+            <button type="submit" @onclick="() => addPaper()">Save</button>
+        </form>
+        <button type="button" onclick="location.href='/Author/'+@authorID">Cancel</button>
+        <!-- <input type="submit" value="Submit"> -->
+    </div>
 
-    </form>
 
 
 </div>
 
-
-@code {
-    [Parameter]
+@code { [Parameter]
     public string authorID { get; set; }
-
-
-
-}
+    int PaperID;
+    bool Active;
+    string FilenameOriginal, Filename, Title, Certification, NotesToReviewers, OtherDescription;
+    bool AnalysisOfAlgorithms, Applications, Architecture, ArtificialIntelligence, ComputerEngineering, Curriculum, DataStructures, Databases, DistanceLearning, DistributedSystems, EthicalSocietalIssues, FirstYearComputing, GenderIssues, GrantWriting, GraphicsImageProcessing, HumanComputerInteraction, LaboratoryEnvironments, Literacy, MathematicsInComputing, Multimedia, NetworkingDataCommunications, NonMajorCourses, ObjectOrientedIssues, OperatingSystems, ParallelsProcessing, Pedagogy, ProgrammingLanguages, Research, Security, SoftwareEngineering, SystemsAnalysisAndDesign, UsingTechnologyInTheClassroom, WebAndInternetProgramming, Other;
+    private Task addPaper()
+    {
+        string sql = "INSERT INTO Paper (AuthorID, FilenameOriginal, Filename, Title, Certification, NotesToReviewers, OtherDescription, AnalysisOfAlgorithms, Applications, Architecture, ArtificialIntelligence, ComputerEngineering, Curriculum, DataStructures, Databases, DistanceLearning, DistributedSystems, EthicalSocietalIssues, FirstYearComputing, GenderIssues, GrantWriting, GraphicsImageProcessing, HumanComputerInteraction, LaboratoryEnvironments, Literacy, MathematicsInComputing, Multimedia, NetworkingDataCommunications, NonMajorCourses, ObjectOrientedIssues, OperatingSystems, ParallelsProcessing, Pedagogy, ProgrammingLanguages, Research, Security, SoftwareEngineering, SystemsAnalysisAndDesign, UsingTechnologyInTheClassroom, WebAndInternetProgramming, Other) VALUES ('" + authorID + "', '" + FilenameOriginal + "', '" + Filename + "', '" + Title + "', '" + Certification + "', '" + NotesToReviewers + "', '" + OtherDescription + "', '" + AnalysisOfAlgorithms + "', '" + Applications + "', '" + Architecture + "', '" + ArtificialIntelligence + "', '" + ComputerEngineering + "', '" + Curriculum + "', '" + DataStructures + "', '" + Databases + "', '" + DistanceLearning + "', '" + DistributedSystems + "', '" + EthicalSocietalIssues + "', '" + FirstYearComputing + "', '" + GenderIssues + "', '" + GrantWriting + "', '" + GraphicsImageProcessing + "', '" + HumanComputerInteraction + "', '" + LaboratoryEnvironments + "', '" + Literacy + "', '" + MathematicsInComputing + "', '" + Multimedia + "', '" + NetworkingDataCommunications + "', '" + NonMajorCourses + "', '" + ObjectOrientedIssues + "', '" + OperatingSystems + "', '" + ParallelsProcessing + "', '" + Pedagogy + "', '" + ProgrammingLanguages + "', '" + Research + "', '" + Security + "', '" + SoftwareEngineering + "', '" + SystemsAnalysisAndDesign + "', '" + UsingTechnologyInTheClassroom + "', '" + WebAndInternetProgramming + "', '" + Other + "')";
+        return _data.SaveData<dynamic>(sql, new { }, _config.GetConnectionString("DefaultConnection"));
+    } }
