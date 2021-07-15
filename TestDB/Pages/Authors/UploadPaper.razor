@@ -16,11 +16,10 @@
     <h1 class="content-item">UploadPaper</h1>
 
     <h3 class="content-item">Paper Submission Form:</h3>
-    <form action="submitpaper()">
 
         <label for="AuthorID" class="content-item">AuthorID: @authorID</label><br />
         <label for="Paper Title" class="content-item">Title: </label>
-        <input type="text" id="Title" name="Title" @bind="Title">
+        <input type="text" id="Title" name="Title" @bind="Title" style="width: 50%">
 
         <h4>Topics:</h4><br />
         <div class="content-item">
@@ -101,18 +100,19 @@
             <label for="UsingTechnologyInTheClassroom">Using Technology In The Classroom: </label>
             <input type="checkbox" @bind="UsingTechnologyInTheClassroom">
             <label for="Other">Other: </label>
-            <input type="checkbox" @bind="Other">
+            <input type="checkbox" @bind="Other"><br>
             <label for="App">Other Description: </label>
             <textarea id="OtherDesc" name="OtherDesc" rows="5" cols="75" @bind="OtherDescription"></textarea>
         </div>
         <div class="content-item">
             <input type="file" id="myFile" name="filename" @bind="Filename"><br />
-            <input type="submit">
+            <form onsubmit="location.href='/MyPapers/'+@authorID">
+            <input type="submit" @onclick="() => addPaper()">
+            </form>
             <button type="button" onclick="location.href='/Author/'+@authorID">Cancel</button>
             <!-- <input type="submit" value="Submit"> -->
         </div>
 
-    </form>
 
 
 </div>
